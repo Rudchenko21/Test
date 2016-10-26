@@ -1,0 +1,9 @@
+D:\MVCTasks\Task\Task.DAL\bin\Debug\Task.DAL.dll.config
+D:\MVCTasks\Task\Task.DAL\bin\Debug\Task.DAL.dll
+D:\MVCTasks\Task\Task.DAL\bin\Debug\Task.DAL.pdb
+D:\MVCTasks\Task\Task.DAL\bin\Debug\EntityFramework.dll
+D:\MVCTasks\Task\Task.DAL\bin\Debug\EntityFramework.SqlServer.dll
+D:\MVCTasks\Task\Task.DAL\bin\Debug\EntityFramework.xml
+D:\MVCTasks\Task\Task.DAL\bin\Debug\EntityFramework.SqlServer.xml
+D:\MVCTasks\Task\Task.DAL\obj\Debug\Task.DAL.dll
+D:\MVCTasks\Task\Task.DAL\obj\Debug\Task.DAL.pdb

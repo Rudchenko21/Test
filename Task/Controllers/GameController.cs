@@ -72,6 +72,7 @@ namespace Task.Controllers
             gameService.Edit(Mapper.Map<GameViewModel, GameDTO>(model));
             return new HttpStatusCodeResult(HttpStatusCode.Created);
         }
+
         [HttpPost]
         public HttpStatusCodeResult EditGame(GameViewModel model)
         {

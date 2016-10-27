@@ -17,16 +17,14 @@ namespace Task.MappingUI
 
         protected override void Configure()
         {
-            Mapper.CreateMap<GameDTO, GameViewModel>()
-                .ForMember(c => c.Genre, m => m.MapFrom(s => (s.Genre.Select(s1 => new GenreDTO { Name = s1.Name, ParentId = s1.ParentId, GenreId = s1.GenreId }).ToList())))
-                .ForMember(c => c.PlatformType, m => m.MapFrom(s => (s.PlatformType.Select(s1 => new PlatformTypeDTO { Key = s1.Key, Name = s1.Name }).ToList())));
+            Mapper.CreateMap<GameDTO, GameViewModel>().ReverseMap();
+                //.ForMember(c => c.Genre, m => m.MapFrom(s => (s.Genre.Select(s1 => new GenreDTO { Name = s1.Name, ParentId = s1.ParentId, GenreId = s1.GenreId }).ToList())))
+                //.ForMember(c => c.PlatformType, m => m.MapFrom(s => (s.PlatformType.Select(s1 => new PlatformTypeDTO { Key = s1.Key, Name = s1.Name }).ToList())));
 
-            Mapper.CreateMap<GameViewModel, GameDTO>()
-                .ForMember(c => c.Genre, m => m.MapFrom(s => (s.Genre.Select(s1 => new GenreViewModel { Name = s1.Name, ParentId = s1.ParentId, GenreId = s1.GenreId }).ToList())))
-                .ForMember(c => c.PlatformType, m => m.MapFrom(s => (s.PlatformType.Select(s1 => new PlatformTypeViewModel { Key = s1.Key, Name = s1.Name }).ToList())));
+            Mapper.CreateMap<GameViewModel, GameDTO>();
             Mapper.CreateMap<GenreDTO, GenreViewModel>().ReverseMap();
             Mapper.CreateMap<PlatformTypeDTO, PlatformTypeViewModel>().ReverseMap() ;
-            Mapper.CreateMap<CommentDTO, CommentViewModel>();
+            Mapper.CreateMap<CommentDTO, CommentViewModel>().ReverseMap();
 
         }
     }

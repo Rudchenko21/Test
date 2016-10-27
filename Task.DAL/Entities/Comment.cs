@@ -14,7 +14,7 @@ namespace Task.DAL.Entities
         public int Key { get; set; }
         public string Name { get; set; }
         public string Body { get; set; }
-        public virtual ICollection<Comment> Comments { get; set; }
+        public ICollection<Comment> Comments { get; set; }
         public virtual Game Game { get; set; }
     }
 }

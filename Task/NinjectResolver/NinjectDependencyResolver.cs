@@ -46,6 +46,7 @@ namespace Task.NinjectResolver
 
         {
             kernel.Bind<IGameService>().To<GameService>();
+            kernel.Bind<ICommentService>().To<CommentService>();
             Task.BLL.NinjectDependencyResolver.NinjectResolver.Configure(kernel);
         }
 

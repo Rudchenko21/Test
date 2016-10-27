@@ -7,3 +7,12 @@ D:\MVCTasks\Task\Task.DAL\bin\Debug\EntityFramework.xml
 D:\MVCTasks\Task\Task.DAL\bin\Debug\EntityFramework.SqlServer.xml
 D:\MVCTasks\Task\Task.DAL\obj\Debug\Task.DAL.dll
 D:\MVCTasks\Task\Task.DAL\obj\Debug\Task.DAL.pdb
+C:\Users\Yara\Documents\Epam\Task1\Task.DAL\bin\Debug\Task.DAL.dll.config
+C:\Users\Yara\Documents\Epam\Task1\Task.DAL\bin\Debug\Task.DAL.dll
+C:\Users\Yara\Documents\Epam\Task1\Task.DAL\bin\Debug\Task.DAL.pdb
+C:\Users\Yara\Documents\Epam\Task1\Task.DAL\bin\Debug\EntityFramework.dll
+C:\Users\Yara\Documents\Epam\Task1\Task.DAL\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Yara\Documents\Epam\Task1\Task.DAL\bin\Debug\EntityFramework.xml
+C:\Users\Yara\Documents\Epam\Task1\Task.DAL\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Yara\Documents\Epam\Task1\Task.DAL\obj\Debug\Task.DAL.dll
+C:\Users\Yara\Documents\Epam\Task1\Task.DAL\obj\Debug\Task.DAL.pdb

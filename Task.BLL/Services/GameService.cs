@@ -61,6 +61,10 @@ namespace Task.BLL.Services
 
             }
         }
+        //public IEnumerable<GameDTO> GetGamesByPlatform(int Id)
+        //{
+
+        //}
         public void Edit(GameDTO item)
         {
             if (item != null)

@@ -27,8 +27,7 @@ namespace Task.BLL.Mapping
                 .ForMember(c => c.Genre, m => m.MapFrom(s => (s.Genre.Select(s1 => new GenreDTO { Name = s1.Name, ParentId = s1.ParentId, GenreId = s1.GenreId }).ToList())))
                 .ForMember(c => c.PlatformType, m => m.MapFrom(s => (s.PlatformType.Select(s1 => new PlatformTypeDTO { Key = s1.Key, Name = s1.Name }).ToList())));
             Mapper.CreateMap<Comment, CommentDTO>()
-                .ForMember(m => m.GameKey, c => c.MapFrom(s => s.Game.Key))
-                .ForMember(m => m.Comments, c => c.MapFrom(s => (s.Comments.Select(s1 => new CommentDTO { Body = s1.Body, GameKey = s1.Game.Key, Key = s1.Key, Name = s1.Name })))).MaxDepth(2);
+                .ForMember(c => c.Comments, m => m.MapFrom(s => s.Comments));
         }
     }
 }

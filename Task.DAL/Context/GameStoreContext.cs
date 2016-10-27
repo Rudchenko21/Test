@@ -12,6 +12,7 @@ namespace Task.DAL.Context
     {
         public GameStoreContext() : base("GameStore")
         {
+            this.Configuration.ProxyCreationEnabled = false;  
         }
         public virtual DbSet<Comment> Comments { get; set; }
         public DbSet<Game> Games { get; set; }

@@ -26,6 +26,8 @@ namespace Task.MappingUI
                 .ForMember(c => c.PlatformType, m => m.MapFrom(s => (s.PlatformType.Select(s1 => new PlatformTypeViewModel { Key = s1.Key, Name = s1.Name }).ToList())));
             Mapper.CreateMap<GenreDTO, GenreViewModel>().ReverseMap();
             Mapper.CreateMap<PlatformTypeDTO, PlatformTypeViewModel>().ReverseMap() ;
+            Mapper.CreateMap<CommentDTO, CommentViewModel>();
+
         }
     }
 }

@@ -1,13 +1,27 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task", "Task\Task.csproj", "{A041698E-E395-4540-A8C9-B12C94C5E905}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3E2116B7-0CB7-4C5A-92D8-355E5576B9CE} = {3E2116B7-0CB7-4C5A-92D8-355E5576B9CE}
+		{A0CC82CA-97EE-44A9-A245-7DF1875318FB} = {A0CC82CA-97EE-44A9-A245-7DF1875318FB}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task.DAL", "Task.DAL\Task.DAL.csproj", "{A0CC82CA-97EE-44A9-A245-7DF1875318FB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task.BLL", "Task.BLL\Task.BLL.csproj", "{3E2116B7-0CB7-4C5A-92D8-355E5576B9CE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A0CC82CA-97EE-44A9-A245-7DF1875318FB} = {A0CC82CA-97EE-44A9-A245-7DF1875318FB}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{631F7CDE-2BF3-4CCA-B574-4B63F739E58D}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

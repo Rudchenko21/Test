@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Task.DAL.Context;
@@ -45,6 +46,10 @@ namespace Task.DAL.Repository
                 this.db.Entry(editItem).State = EntityState.Modified;
             }
         }
+        public IEnumerable<T> GetAllByPredicate(Expression<Func<T, bool>> filter, Expression<Func<T,bool>> name)
+          {
+            return this.entity.Include(name).Where(filter);
+          }
         public IEnumerable<T> GetAll()
         {
             return this.entity;

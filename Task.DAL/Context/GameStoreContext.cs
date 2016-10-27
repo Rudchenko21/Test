@@ -12,21 +12,15 @@ namespace Task.DAL.Context
     {
         public GameStoreContext() : base("GameStore")
         {
-            this.Configuration.ProxyCreationEnabled = false;  
         }
-        public virtual DbSet<Comment> Comments { get; set; }
+        public DbSet<Comment> Comments { get; set; }
         public DbSet<Game> Games { get; set; }
         public DbSet<Genre> Genres { get; set; }
         public DbSet<PlatformType> PlatformTypes { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            // настройка полей с помощью Fluent API
-            modelBuilder.Entity<Comment>().HasKey(m => m.Key);
-            modelBuilder.Entity<Game>().HasKey(m => m.Key);
-            modelBuilder.Entity<Genre>().HasKey(m => m.GenreId);
-            modelBuilder.Entity<PlatformType>().HasKey(m => m.Key);
-            base.OnModelCreating(modelBuilder);
+            
         }
 
     }

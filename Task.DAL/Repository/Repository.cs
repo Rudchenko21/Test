@@ -31,7 +31,8 @@ namespace Task.DAL.Repository
         {
             if (newItem != null)
             {
-                this.entity.Add(newItem);
+                this.entity.Attach(newItem);
+                this.db.Entry(newItem).State = EntityState.Added;
             }
         }
         public void Delete(int Id)
@@ -46,13 +47,36 @@ namespace Task.DAL.Repository
                 this.db.Entry(editItem).State = EntityState.Modified;
             }
         }
-        public IEnumerable<T> GetAllByPredicate(Expression<Func<T, bool>> filter, Expression<Func<T,bool>> name)
+        public IEnumerable<T> GetAllByInclude(Expression<Func<T, bool>> filter, string name)
           {
             return this.entity.Include(name).Where(filter);
           }
-        public IEnumerable<T> GetAll()
+        public virtual ICollection<T> Get(
+        Expression<Func<T, bool>> filter = null,
+        Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+        string includeProperties = "")
         {
-            return this.entity;
+            IQueryable<T> query =entity;
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            foreach (var includeProperty in includeProperties.Split
+                (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
+            }
+
+            if (orderBy != null)
+            {
+                return orderBy(query).ToList();
+            }
+            else
+            {
+                return query.ToList();
+            }
         }
     }
 }

@@ -13,6 +13,6 @@ namespace Task.DAL.Entities
         [Key]
         public int Key { get; set; }
         public string Name { get; set; }
-        public virtual ICollection<Game> Game { get; set; }
+        public virtual ICollection<Game> Games { get; set; }
     }
 }

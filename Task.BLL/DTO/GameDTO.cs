@@ -12,8 +12,8 @@ namespace Task.BLL.DTO
         public int Key { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public IEnumerable<GenreDTO> Genre { get; set; }
-        public IEnumerable<PlatformTypeDTO> PlatformType { get; set; }
+        public ICollection<PlatformTypeDTO> PlatformTypes { get; set; }
+        public ICollection<GenreDTO> Genres { get; set; }
         public bool Equals(GameDTO obj)
         {
             // Would still want to check for null etc. first.

@@ -44,11 +44,11 @@ namespace Task.DAL.Context
             db.PlatformTypes.AddRange(PlatformTypeList);
             db.SaveChanges();
             List<Game> GameList = new List<Game>{
-                new Game{Name="GTA 5",Description="GTA5 it's really cool game",Comments=list,Genre=new List<Genre>{GenreList[1]},PlatformType=new List<PlatformType>{PlatformTypeList[0],PlatformTypeList[1]}}
+                new Game{Name="GTA 5",Description="GTA5 it's really cool game",Comments=list,Genres=new List<Genre>{GenreList[1]},PlatformTypes=new List<PlatformType>{PlatformTypeList[0],PlatformTypeList[1]}}
             };
             db.Games.AddRange(GameList);
-            PlatformTypeList[0].Game = GameList;
-            PlatformTypeList[1].Game = GameList;
+            PlatformTypeList[0].Games = GameList;
+            PlatformTypeList[1].Games = GameList;
             db.SaveChanges();
         }
 

@@ -7,6 +7,10 @@ using System.Web.Mvc;
 using Task.BLL.Interfaces;
 using Task.BLL.Services;
 using Task.BLL.NinjectDependencyResolver;
+using Task.BLL.Nlog;
+using Ninject.Web.Mvc.FilterBindingSyntax;
+using Task.Controllers;
+using Task.Filters;
 
 namespace Task.NinjectResolver
 {
@@ -47,6 +51,10 @@ namespace Task.NinjectResolver
         {
             kernel.Bind<IGameService>().To<GameService>();
             kernel.Bind<ICommentService>().To<CommentService>();
+            kernel.Bind<ILoggingService>().To<LoggingService_>();
+            kernel.BindFilter<LogIPFilterAttribute>(FilterScope.Controller, 0)
+            .WhenControllerType<GameController>();
+
             Task.BLL.NinjectDependencyResolver.NinjectResolver.Configure(kernel);
         }
 

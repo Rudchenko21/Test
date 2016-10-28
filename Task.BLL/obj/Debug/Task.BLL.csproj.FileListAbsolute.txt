@@ -42,3 +42,5 @@ C:\Users\Yara\Documents\Epam\Task1\Task.BLL\bin\Debug\Ninject.Web.Common.xml
 C:\Users\Yara\Documents\Epam\Task1\Task.BLL\bin\Debug\Ninject.Web.Mvc.xml
 C:\Users\Yara\Documents\Epam\Task1\Task.BLL\bin\Debug\Task.DAL.pdb
 C:\Users\Yara\Documents\Epam\Task1\Task.BLL\bin\Debug\EntityFramework.xml
+D:\MVCTasks\Task\Task.BLL\bin\Debug\NLog.dll
+D:\MVCTasks\Task\Task.BLL\bin\Debug\NLog.xml

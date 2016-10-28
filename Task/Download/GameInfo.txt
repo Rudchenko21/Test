@@ -1,0 +1,4 @@
+Game name : GTA 5 
+ Game description : GTA5 it's really cool game 
+ Game genres: System.Linq.Enumerable+WhereSelectListIterator`2[Task.ViewModel.GenreViewModel,System.String] 
+ Game platformtype : System.Linq.Enumerable+WhereSelectListIterator`2[Task.ViewModel.PlatformTypeViewModel,System.String]

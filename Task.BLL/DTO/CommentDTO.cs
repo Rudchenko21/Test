@@ -12,7 +12,6 @@ namespace Task.BLL.DTO
         public int GameKey { get; set; }
         public string Name { get; set; }
         public string Body { get; set; }
-        public int gh { get; set; }
         public IEnumerable<CommentDTO> Comments { get; set; }
     }
 }

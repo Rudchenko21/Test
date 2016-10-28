@@ -129,3 +129,5 @@ C:\Users\Yara\Documents\Epam\Task1\Task\bin\System.Web.Webpages.Razor.xml
 C:\Users\Yara\Documents\Epam\Task1\Task\bin\System.Web.Helpers.xml
 C:\Users\Yara\Documents\Epam\Task1\Task\bin\System.Web.Mvc.xml
 C:\Users\Yara\Documents\Epam\Task1\Task\bin\Task.BLL.dll
+D:\MVCTasks\Task\Task\bin\NLog.dll
+D:\MVCTasks\Task\Task\bin\NLog.xml

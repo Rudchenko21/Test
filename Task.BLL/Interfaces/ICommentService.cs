@@ -10,6 +10,7 @@ namespace Task.BLL.Interfaces
 {
     public interface ICommentService
     {
-        IEnumerable<CommentDTO> GetAll();
+        IEnumerable<CommentDTO> GetAllByGame(int Key);
+        void AddCommentToGame(CommentDTO item);
     }
 }

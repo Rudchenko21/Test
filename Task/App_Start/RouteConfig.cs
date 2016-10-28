@@ -13,6 +13,24 @@ namespace Task
         {
             
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+
+            routes.MapRoute(
+                name: "gameDetails",
+                url: "games/{key}",
+                defaults: new { controller = "Game", action = "GetGameByKey" },
+                constraints: new {key= @"\d +"}
+            );
+            routes.MapRoute(
+                null,
+                url: "games/{action}",
+                defaults: new { controller = "Game", action = "update" }
+            );
+            routes.MapRoute(
+                null,
+                url: "games/new",
+                defaults: new { controller = "Game", action = "AddGame" }
+            );
+
             routes.MapRoute(
                 name: "add1",
                 url: "games/{gamekey}/newcomment",
@@ -24,11 +42,7 @@ namespace Task
                 url: "game/{gamekey}/download",
                 defaults: new { controller = "Game", action = "DownloadGameToFile" }
             );
-            routes.MapRoute(
-                name: "add_new",
-                url: "games/{key}",
-                defaults: new { controller = "Game", action = "GetGameByKey" }
-            );
+            
             routes.MapRoute(
                 name: "get_comments",
                 url: "game/{gamekey}/comment",
@@ -38,7 +52,7 @@ namespace Task
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Game", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Game", action = "GetAllGames", id = UrlParameter.Optional }
             );
         }
     }

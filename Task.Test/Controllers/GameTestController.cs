@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using Task;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,6 @@ using Task.DAL.Interfaces;
 using Task.DAL.Context;
 using System.Data.Entity;
 using Task.DAL.Repository;
-using Task.Controllers;
 using Task.BLL.Services;
 using Task.BLL.DTO;
 using Task.DAL.UnitOfWork;
@@ -18,17 +18,19 @@ using AutoMapper;
 using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
 using Task.BLL.Interfaces;
 using System.Web.Mvc;
+using Task;
+using Task.Controllers;
 
 namespace Task.Test.Controllers
 {
-    [TestClass]
+    
     public class GameTestController
     {
         private Mock<IGameService> _mockGameService;
         private GameController controller;
         private List<Game> _gameList;
 
-        [TestInitialize]
+       
         public void Setup()
         {
             Mapper.CreateMap<Game, GameDTO>().ReverseMap();
@@ -50,7 +52,6 @@ namespace Task.Test.Controllers
             };
 
         }
-        [TestMethod]
         public void GetAllGames()
         {
             //Arrange

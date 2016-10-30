@@ -25,4 +25,3 @@ C:\Users\Yara\Documents\Epam\Task1\Task.DAL\bin\Debug\Moq.xml
 C:\Users\Yara\Documents\Epam\Task1\Task.DAL\bin\Debug\Ninject.xml
 C:\Users\Yara\Documents\Epam\Task1\Task.DAL\bin\Debug\Ninject.MockingKernel.xml
 C:\Users\Yara\Documents\Epam\Task1\Task.DAL\bin\Debug\Ninject.MockingKernel.Moq.xml
-C:\Users\Yara\Documents\Epam\Task1\Task.DAL\obj\Debug\Task.DAL.csprojResolveAssemblyReference.cache

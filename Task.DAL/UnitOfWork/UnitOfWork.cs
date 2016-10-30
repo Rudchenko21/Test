@@ -24,9 +24,9 @@ namespace Task.DAL.UnitOfWork
             {
                 this.db = db;
             }
-            this.db = new GameStoreContext();
+            else this.db = new GameStoreContext();
         }
-        public IRepository<Game> Game
+        public virtual IRepository<Game> Game
         {
             get
             {

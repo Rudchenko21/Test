@@ -16,7 +16,7 @@ namespace Task.BLL.Models
         public string AppDomain { get; set; }
         public override string ToString()
         {
-            return $"StatusCode : {StatusCode} Message : {Message}  Assembly: {Assembly}  AppDomain : {AppDomain}  TargetSite : {TargetSite}   StackTrace : {StackTrace}";
+            return "StatusCode : {StatusCode} Message : {Message}  Assembly: {Assembly}  AppDomain : {AppDomain}  TargetSite : {TargetSite}   StackTrace : {StackTrace}";
         }
     }
 }

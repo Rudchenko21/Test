@@ -10,9 +10,8 @@ namespace Task.DAL.Interfaces
     public interface IRepository<T> where T : class
     {
         ICollection<T> Get(
-        Expression<Func<T, bool>> filter = null,
-        Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-        string includeProperties = "");
+        Expression<Func<T, bool>> filter = null);
+        ICollection<T> GetAll();
         IEnumerable<T> GetAllByInclude(Expression<Func<T, bool>> filter, string name);
         T GetById(int id);
         void Add(T newItem);

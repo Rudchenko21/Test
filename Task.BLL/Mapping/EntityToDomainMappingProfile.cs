@@ -21,11 +21,6 @@ namespace Task.BLL.Mapping
             Mapper.CreateMap<Genre, GenreDTO>().ReverseMap();
             Mapper.CreateMap<PlatformType, PlatformTypeDTO>().ReverseMap();
             Mapper.CreateMap<Game, GameDTO>().ReverseMap();
-            //.ForMember(c => c.Genre, m => m.MapFrom(s => (s.Genre.Select(s1 => new Genre {Name= s1.Name,ParentId=s1.ParentId,GenreId = s1.GenreId }).ToList())))
-            //.ForMember(c => c.PlatformType, m => m.MapFrom(s => (s.PlatformType.Select(s1 => new PlatformType { Key=s1.Key,Name=s1.Name }).ToList())));
-            Mapper.CreateMap<GameDTO, Game>();
-            //    .ForMember(c => c.Genre, m => m.MapFrom(s => (s.Genre.Select(s1 => new GenreDTO { Name = s1.Name, ParentId = s1.ParentId, GenreId = s1.GenreId }).ToList())))
-            //    .ForMember(c => c.PlatformType, m => m.MapFrom(s => (s.PlatformType.Select(s1 => new PlatformTypeDTO { Key = s1.Key, Name = s1.Name }).ToList())));
             Mapper.CreateMap<Comment, CommentDTO>().ReverseMap();
         }
     }

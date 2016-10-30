@@ -23,26 +23,25 @@ namespace Task.BLL.Services
         //get all games
         public ICollection<GameDTO> GetAll()
         {
-            var a = this.db.Game.Get();
-            return Mapper.Map<ICollection<Game>,ICollection<GameDTO>>(this.db.Game.Get().ToList());
+            var a = this.db.Game.GetAll();
+            return Mapper.Map<ICollection<Game>,ICollection<GameDTO>>(this.db.Game.GetAll().ToList());
         }
         public void AddGame(GameDTO newGame)
         {
             if (newGame != null)
             {
+                //if (this.db.Game.GetById(1)!=null)
+                //{
                     this.db.Game.Add(Mapper.Map<GameDTO, Game>(newGame));
                     db.SaveChanges();
+                //}
             } 
         }
         public GameDTO GetGameByKey(int key)
         {
             if (key > 0)
             {
-                if (this.db.Game.Get().Where(m => m.Key == key).Count() != 0)
-                {
-                    return Mapper.Map<Game, GameDTO>(this.db.Game.GetById(key));
-                }
-                else return null;
+                return Mapper.Map<Game, GameDTO>(this.db.Game.GetById(key));
             }
             else return null;
         }
@@ -58,12 +57,8 @@ namespace Task.BLL.Services
         {
             if (key != 0)
             {
-                if (this.db.Game.Get().Where(m => m.Key == key).Count() > 0)
-                {
                     this.db.Game.Delete(key);
                     this.db.SaveChanges();
-                }
-
             }
         }
         public void Edit(GameDTO item)

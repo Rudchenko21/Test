@@ -10,7 +10,7 @@ using Task.DAL.Interfaces;
 
 namespace Task.DAL.Repository
 {
-    class Repository<T> : IRepository<T> where T : class
+    public class Repository<T> : IRepository<T> where T : class
     {
         private readonly GameStoreContext db;
         private DbSet<T> entity;
@@ -27,7 +27,7 @@ namespace Task.DAL.Repository
         {
             return this.entity.Find(Id);
         }
-        public void Add(T newItem)
+        public virtual void Add(T newItem)
         {
             if (newItem != null)
             {
@@ -48,35 +48,22 @@ namespace Task.DAL.Repository
             }
         }
         public IEnumerable<T> GetAllByInclude(Expression<Func<T, bool>> filter, string name)
-          {
+        {
             return this.entity.Include(name).Where(filter);
-          }
-        public virtual ICollection<T> Get(
-        Expression<Func<T, bool>> filter = null,
-        Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-        string includeProperties = "")
+        }
+        public virtual ICollection<T> Get(Expression<Func<T, bool>> filter = null)
         {
             IQueryable<T> query =entity;
-
             if (filter != null)
             {
                 query = query.Where(filter);
             }
-
-            foreach (var includeProperty in includeProperties.Split
-                (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-            {
-                query = query.Include(includeProperty);
-            }
-
-            if (orderBy != null)
-            {
-                return orderBy(query).ToList();
-            }
-            else
-            {
                 return query.ToList();
-            }
+        }
+        public virtual ICollection<T> GetAll()
+        {
+            if (this.Get() == null) return null;
+            return this.Get();
         }
     }
 }

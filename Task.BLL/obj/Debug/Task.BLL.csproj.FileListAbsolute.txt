@@ -44,3 +44,5 @@ C:\Users\Yara\Documents\Epam\Task1\Task.BLL\bin\Debug\Task.DAL.pdb
 C:\Users\Yara\Documents\Epam\Task1\Task.BLL\bin\Debug\EntityFramework.xml
 D:\MVCTasks\Task\Task.BLL\bin\Debug\NLog.dll
 D:\MVCTasks\Task\Task.BLL\bin\Debug\NLog.xml
+C:\Users\Yara\Documents\Epam\Task1\Task.BLL\bin\Debug\NLog.dll
+C:\Users\Yara\Documents\Epam\Task1\Task.BLL\bin\Debug\NLog.xml

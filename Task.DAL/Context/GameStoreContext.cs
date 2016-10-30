@@ -13,10 +13,10 @@ namespace Task.DAL.Context
         public GameStoreContext() : base("GameStore")
         {
         }
-        public DbSet<Comment> Comments { get; set; }
-        public DbSet<Game> Games { get; set; }
-        public DbSet<Genre> Genres { get; set; }
-        public DbSet<PlatformType> PlatformTypes { get; set; }
+        public virtual DbSet<Comment> Comments { get; set; }
+        public virtual DbSet<Game> Games { get; set; }
+        public virtual DbSet<Genre> Genres { get; set; }
+        public virtual DbSet<PlatformType> PlatformTypes { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

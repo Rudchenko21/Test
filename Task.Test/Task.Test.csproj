@@ -130,6 +130,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Services\BV.cs" />
     <Compile Include="Services\CommentServiceTest.cs" />
     <Compile Include="Services\GameServiceTest.cs" />
     <Compile Include="Controllers\GameTestController.cs" />

@@ -17,28 +17,30 @@ using Task.DAL.UnitOfWork;
 using AutoMapper;
 using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
 using Task.BLL.Interfaces;
-using System.Web.Mvc;
-using Task;
 using Task.Controllers;
+using System.Web.Mvc;
+using Task.BLL.Nlog;
+using Task.ViewModel;
+using Task.MappingUI;
 
 namespace Task.Test.Controllers
 {
-    
+    [TestClass]
     public class GameTestController
     {
         private Mock<IGameService> _mockGameService;
         private GameController controller;
+        private Mock<ILoggingService> logger;
+        private Mock<IGameService> _mockGame;
         private List<Game> _gameList;
-
-       
+       [TestInitialize]
         public void Setup()
         {
-            Mapper.CreateMap<Game, GameDTO>().ReverseMap();
-            Mapper.CreateMap<Genre, GenreDTO>().ReverseMap();
-            Mapper.CreateMap<PlatformType, PlatformTypeDTO>().ReverseMap();
+            AutoMapperConfiguration.Configure();
 
             this._mockGameService = new Mock<IGameService>();
-            this.controller = new Task.Controllers.GameController(_mockGameService.Object, null, null);
+            logger = new Mock<ILoggingService>();
+            this.controller = new Task.Controllers.GameController(_mockGameService.Object, null, logger.Object);
 
             var genres = new List<Genre>{
                 new Genre{Name="fdf",GenreId=1,ParentId=0}
@@ -52,14 +54,40 @@ namespace Task.Test.Controllers
             };
 
         }
-        public void GetAllGames()
+        [TestMethod]
+        public void GetAllGames_ReturnList()
         {
             //Arrange
             _mockGameService.Setup(m => m.GetAll()).Returns(Mapper.Map<ICollection<GameDTO>>(_gameList));
             //Act
-            var result = (controller.GetAllGames() as JsonResult).Data as List<Game>;
+            var result = ((controller.GetAllGames() as JsonResult).Data as IEnumerable<GameViewModel>).ToList();
             //Assert
             Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(1, result[0].Key);
+            Assert.AreEqual(2, result[1].Key);
+        }
+        [TestMethod]
+        public void GetAllGames_GetGamesIfNoRecodrs_Null()
+        {
+            ////Arrange
+            //_mockGameService.Setup(m => m.GetAll()).Returns(Mapper.Map<ICollection<GameDTO>>(null));
+            ////Act
+            //var result = ((controller.GetAllGames() as JsonResult).Data as IEnumerable<GameViewModel>).ToList();
+            ////Assert
+            //Assert.AreEqual(0, result.Count);
+        }
+
+        [TestMethod]
+        public void GetAllGamesByGenre_KeyOfGenreNotValid_ReturnListGamesNotSuccessible()
+        {
+            int key = -1;
+            //Arrange
+            
+            //Act
+            var result = ((controller.GetAllGamesByGenre(key) as JsonResult).Data as IEnumerable<GameViewModel>).ToList();
+            //Assert
+            Assert.AreEqual(1, result.Count);
+            
         }
     }
 }

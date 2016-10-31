@@ -17,6 +17,7 @@ namespace Task.BLL.Interfaces
         void Edit(GameDTO item);
         IEnumerable<GameDTO> GetByGenre(int Key);
         IEnumerable<GameDTO> GetAllByPlatformType(int Key);
+        bool ExistEntity(int Key);
     }
 
 }

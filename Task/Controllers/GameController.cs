@@ -38,8 +38,12 @@ namespace Task.Controllers
             return Json(Mapper.Map<IEnumerable<GameDTO>, IEnumerable<GameViewModel>>(gameService.GetAll()), JsonRequestBehavior.AllowGet);
         }
         [PerfomanceAction]
-        public JsonResult GetAllGamesByGenre(int id)
+        public ActionResult GetAllGamesByGenre(int id)
         {
+            if(!this.gameService.ExistEntity(id))
+            {
+                return HttpNotFound();
+            }
             logger.Info( "All games were shown for genre with key : {id} by GetAllGamesByGenre in GameController");
             return Json(Mapper.Map<IEnumerable<GameDTO>, IEnumerable<GameViewModel>>(gameService.GetByGenre(id)), JsonRequestBehavior.AllowGet);
         }

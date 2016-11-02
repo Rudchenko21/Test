@@ -10,12 +10,13 @@ using Task.BLL.Nlog;
 
 namespace Task.Filters
 {
-    public class LogIPFilterAttribute: ActionFilterAttribute,IActionFilter
+    public class LogIPFilterAttribute: ActionFilterAttribute,IActionFilter // todo please beatufy your classes
+                                                                           // todo ActionFilterAttribute implements IActionFilter, so you don't need it here
     {
-        
+
         void IActionFilter.OnActionExecuting(ActionExecutingContext filterContext)
         {
-            var logger = DependencyResolver.Current.GetService<ILoggingService>();
+            var logger = DependencyResolver.Current.GetService<ILoggingService>(); // todo good solution :)
             LogIPModel item = new LogIPModel
             {
                 IP = filterContext.HttpContext.Request.UserHostAddress,

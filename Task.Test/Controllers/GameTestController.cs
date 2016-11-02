@@ -28,7 +28,8 @@ using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 namespace Task.Test.Controllers
 {
     [TestFixture]
-    public class GameTestController
+    public class GameTestController // todo rename please. Convention next: YouTestClassNameTests. Here: GameControllerTests.
+        // todo please apply all comments from the first test to all tests
     {
         private Mock<IGameService> _mockGameService;
         private Mock<ICommentService> _mockCommentService;
@@ -51,7 +52,7 @@ namespace Task.Test.Controllers
             };
             var ptypes = new List<PlatformType>{
                 new PlatformType{Key=1,Name="sd"}
-            };
+            }; // todo please beautify this code
             _gameList = new List<Game>{
                 new Game{Id= 1, Name="Fifa",Description="Football",Genres=(genres),PlatformTypes=(ptypes)},
                 new Game{Id= 2, Name="Fifa",Description="Football",Genres=(genres),PlatformTypes=(ptypes)}
@@ -62,14 +63,14 @@ namespace Task.Test.Controllers
             };
         }
         [Test]
-        public void GetAllGames_ReturnList()
-        {
+        public void GetAllGames_ReturnList() // todo please use next name convention: MethodName_ShouldDoSomething_WhenSomeCondition (third part is optional)
+        { // todo please call test properly. Name of test should answer to question what it tests. 
             //Arrange
-            _mockGameService.Setup(m => m.GetAll()).Returns(Mapper.Map<ICollection<GameDTO>>(_gameList));
+            _mockGameService.Setup(m => m.GetAll()).Returns(Mapper.Map<ICollection<GameDTO>>(_gameList)); // todo add extra empty lines
             //Act
             var result = ((controller.GetAllGames() as JsonResult).Data as IEnumerable<GameViewModel>).ToList();
             //Assert
-            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(2, result.Count); // todo use just one Assert per one unit test
             Assert.AreEqual(1, result[0].Id);
             Assert.AreEqual(2, result[1].Id);
         }

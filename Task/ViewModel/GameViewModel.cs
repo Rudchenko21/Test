@@ -17,7 +17,7 @@ namespace Task.ViewModel
         public string Description { get; set; }
         public ICollection<GenreViewModel> Genres { get; set; }
         public ICollection<PlatformTypeViewModel> PlatformTypes { get; set; }
-        public override string ToString()
+        public override string ToString() // todo you don't need print all data. Game key and game id will be enough
         {
             return $"Game name : {Name} \n Game description : {Description} \n Game genres: {Genres.ToList().Select(m=>m.Name+"\n")} \n Game platformtype : {PlatformTypes.ToList().Select(m=>m.Name+"\n")}";
         }

@@ -9,7 +9,7 @@ using Task.DAL.Entities;
 
 namespace Task.BLL.Mapping
 {
-    public class EntityToDomainMappingProfile : Profile
+    public class EntityToDomainMappingProfile : Profile // todo maybe EntityToDtoMappingProfile ?
     {
         public override string ProfileName
         {
@@ -18,7 +18,7 @@ namespace Task.BLL.Mapping
 
         protected override void Configure()
         {
-            Mapper.CreateMap<Genre, GenreDTO>().ReverseMap();
+            Mapper.CreateMap<Genre, GenreDTO>().ReverseMap(); // todo such comment as at DomainToViewMappingProfile
             Mapper.CreateMap<PlatformType, PlatformTypeDTO>().ReverseMap();
             Mapper.CreateMap<Game, GameDTO>().ReverseMap();
             Mapper.CreateMap<Comment, CommentDTO>()

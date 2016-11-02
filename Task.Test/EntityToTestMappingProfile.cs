@@ -9,7 +9,7 @@ using Task.DAL.Entities;
 
 namespace Task.Test.Mapping
 {
-    public class EntityToTestMappingProfile : Profile
+    public class EntityToTestMappingProfile : Profile // todo unused class. Remove it
     {
         public override string ProfileName
         {

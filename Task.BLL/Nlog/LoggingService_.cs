@@ -19,7 +19,7 @@ namespace Task.BLL.Nlog
         }
         public void Info(string message)
         {
-            logger.Info( $"{message}");
+            logger.Info( $"{message}"); // todo you don't need wrap your message to string here, just logger.Info(message);
         }
         public void Error(string message)
         {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Task.BLL.Models
 {
-    public class ExceptionClass
+    public class ExceptionClass // todo I guess, this class is useless
     {
         public string StackTrace { get; set; }
         public string Message { get; set; }

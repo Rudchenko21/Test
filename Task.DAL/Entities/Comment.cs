@@ -11,7 +11,7 @@ namespace Task.DAL.Entities
     public class Comment
     {
         [Key]
-        public int Key { get; set; }
+        public int Key { get; set; } // todo maybe id ?
         public string Name { get; set; }
         public string Body { get; set; }
         public ICollection<Comment> Comments { get; set; }

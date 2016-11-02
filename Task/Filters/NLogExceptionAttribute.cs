@@ -24,7 +24,7 @@ namespace Task.Filters
                     StatusCode= filterContext.HttpContext.Response.StatusCode
                 };
                 
-                logger.Error(exitem.ToString());
+                logger.Error(exitem.ToString()); // todo maybe make sense log just filterContext.Exception here without extra exception..? 
             }
             filterContext.ExceptionHandled = true;
         }

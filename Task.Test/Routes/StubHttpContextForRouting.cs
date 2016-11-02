@@ -8,7 +8,7 @@ using System.Web;
 
 namespace Task.Test.Routes
 {
-    public class StubHttpContextForRouting : HttpContextBase
+    public class StubHttpContextForRouting : HttpContextBase // todo make sense move all stubs to specific folder Stubs
     {
         StubHttpRequestForRouting _request;
         StubHttpResponseForRouting _response;
@@ -29,7 +29,7 @@ namespace Task.Test.Routes
         }
     }
 
-    public class StubHttpRequestForRouting : HttpRequestBase
+    public class StubHttpRequestForRouting : HttpRequestBase // todo one class per one file
     {
         string _appPath;
         string _requestUrl; public StubHttpRequestForRouting(string appPath, string requestUrl)

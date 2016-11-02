@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Web; // todo remove all unused namesaces. How to do it for project or solution can be found here:
+                  // todo https://www.jetbrains.com/help/resharper/2016.2/Refactorings__Remove_Unused_References.html
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -9,10 +10,13 @@ namespace Task
 {
     public class RouteConfig
     {
-        public static void RegisterRoutes(RouteCollection routes)
+        public static void RegisterRoutes(RouteCollection routes) 
         {
             
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+
+            // todo try to optimize routes.
+            // todo for example, next 4 routes can be written via one configuration, not 4.
 
             routes.MapRoute(
                 name: "gameGetAllGames",

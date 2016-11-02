@@ -22,10 +22,10 @@ namespace Task.Test.Routes
             RouteConfig.RegisterRoutes(_routes);
         }
         //вот эти два роута не работают, при чем первый отлично работает в браузере
-        //[TestCase("~/games/2/comment", "Game", "GetAllCommentsByGames")]
+        //[TestCase("~/games/2/comment", "Game", "GetAllCommentsByGames")] // todo try to test its too
         //[TestCase("~/games/1/newcomment", "Game", "AddCommentToGame")]
 
-        [Test]
+        [Test] // todo useless attribute
         [TestCase("~/", "Game", "GetAllGames")]
         [TestCase("~/games", "Game", "GetAllGames")]
         [TestCase("~/game/1", "Game", "GetGameByKey")]

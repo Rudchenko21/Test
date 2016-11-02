@@ -12,15 +12,15 @@ namespace Task.DAL.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly GameStoreContext db;
-        private Repository<Game> game;
+        private readonly GameStoreContext db; // todo rename please. It's not database, it's context
+        private Repository<Game> game; // todo please use proper name, it's _gameRepository, not game.
         private Repository<Comment> comment;
         private Repository<Genre> genre;
         private Repository<PlatformType> platformtype;
 
         public UnitOfWork(GameStoreContext db)
         {
-            if (db != null)
+            if (db != null) // todo please use operator ?? here
             {
                 this.db = db;
             }

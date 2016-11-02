@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Task.BLL.Interfaces
 {
-    public interface IWriter
+    public interface IWriter // todo looks like unuseless interface
     {
         void WriteToFile(string filename, string Text);
     }

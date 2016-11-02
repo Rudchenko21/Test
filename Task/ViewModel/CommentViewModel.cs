@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace Task.ViewModel
 {
-    public class CommentViewModel
+    public class CommentViewModel // todo add extra empty lines
     {
         public int Key { get; set; }
         [Required(ErrorMessage = "Game Id must be specified")]

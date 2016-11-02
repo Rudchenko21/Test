@@ -29,7 +29,7 @@ using Task.MappingUI;
 namespace Task.Test.Controllers
 {
     [TestFixture]
-    public class GameServiceTest
+    public class GameServiceTest // todo try to beautify this class and apply comments from GameTestController
     {
         Mock<IUnitOfWork> _mockUnitOfWork;
         Mock<IRepository<Game>> _mockRepo;

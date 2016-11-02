@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Task.BLL
 {
-    public class Class1
+    public class Class1 // todo remove this class
     {
     }
 }

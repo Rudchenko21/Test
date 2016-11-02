@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Task.BLL.Filters
 {
-    public class LogExceptionFilter
+    public class LogExceptionFilter // todo remove this 
     {
 
     }

@@ -14,7 +14,7 @@ using Task.Filters;
 
 namespace Task.NinjectResolver
 {
-    public class NinjectDependencyResolver : IDependencyResolver
+    public class NinjectDependencyResolver : IDependencyResolver // todo remove extra empty lines
 
     {
 
@@ -49,7 +49,7 @@ namespace Task.NinjectResolver
         private void AddBindings()
 
         {
-            kernel.Bind<IGameService>().To<GameService>();
+            kernel.Bind<IGameService>().To<GameService>(); // todo please move bindings to another class
             kernel.Bind<ICommentService>().To<CommentService>();
             kernel.Bind<ILoggingService>().To<LoggingService_>();
             kernel.BindFilter<LogIPFilterAttribute>(FilterScope.Controller, 0)

@@ -132,11 +132,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-<<<<<<< HEAD
     <Compile Include="Routes\StubHttpContextForRouting.cs" />
-=======
-    <Compile Include="Services\BV.cs" />
->>>>>>> c2587be810a6e476f0c08d9674b0989c4734615d
     <Compile Include="Services\CommentServiceTest.cs" />
     <Compile Include="Services\GameServiceTest.cs" />
     <Compile Include="Controllers\GameTestController.cs" />

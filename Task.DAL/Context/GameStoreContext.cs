@@ -20,7 +20,7 @@ namespace Task.DAL.Context
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            
+            modelBuilder.Entity<Game>().HasMany(x => x.Comments).WithRequired(y => y.Game).WillCascadeOnDelete(true);
         }
 
     }

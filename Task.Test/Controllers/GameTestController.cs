@@ -111,14 +111,21 @@ namespace Task.Test.Controllers
         [Test]
         public void AddGame_NotValidModelState_StatusCode404()
         {
+            var item = new GameViewModel
+            {
+                Key = "New_Game",
+                Description = "Some Description",
+                Name = "GTA"
+            };
             controller.ModelState.AddModelError("test", "test");
-            var statusCode = controller.AddGame(It.IsAny<GameViewModel>()) as HttpStatusCodeResult;
+            var statusCode = controller.AddGame(item) as HttpStatusCodeResult;
             Assert.AreEqual(statusCode.StatusCode, 404);
         }
         [Test]
         public void AddGame_NullModel_StatusCode500()
         {
-            var statusCode = controller.AddGame(It.IsAny<GameViewModel>()) as HttpStatusCodeResult;
+
+            var statusCode = controller.AddGame(null) as HttpStatusCodeResult;
             Assert.AreEqual(statusCode.StatusCode, 500);
         }
         [Test]
@@ -131,26 +138,26 @@ namespace Task.Test.Controllers
         [Test]
         public void Remove_ValidModelState_StatusCode200()
         {
-            var statusCode = controller.RemoveGame(1) as HttpStatusCodeResult;
+            var statusCode = controller.remove(1) as HttpStatusCodeResult;
             Assert.AreEqual(statusCode.StatusCode, 201);
         }
         [Test]
         public void Remove_NotValidKey_StatusCode500()
         {
-            var statusCode = controller.RemoveGame(-1) as HttpStatusCodeResult;
+            var statusCode = controller.remove(-1) as HttpStatusCodeResult;
             Assert.AreEqual(statusCode.StatusCode, 500);
         }
         [Test]
         public void Update_ValidModelState_StatusCode200()
         {
-            var statusCode = controller.UpdateGame(It.IsAny<GameViewModel>()) as HttpStatusCodeResult;
+            var statusCode = controller.update(It.IsAny<GameViewModel>()) as HttpStatusCodeResult;
             Assert.AreEqual(statusCode.StatusCode, 201);
         }
         [Test]
         public void Update_ValidModelState_StatusCode400()
         {
             controller.ModelState.AddModelError("test", "test");
-            var statusCode = controller.UpdateGame(It.IsAny<GameViewModel>()) as HttpStatusCodeResult;
+            var statusCode = controller.update(It.IsAny<GameViewModel>()) as HttpStatusCodeResult;
             Assert.AreEqual(statusCode.StatusCode, 404);
         }
 

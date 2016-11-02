@@ -114,45 +114,33 @@ namespace Task.Controllers
         [OutputCache(Duration = 60)]
         public HttpStatusCodeResult AddGame(GameViewModel model)
         {
-            if (model.Key == String.Empty)
+            if (model != null)
             {
-                ModelState.AddModelError("Key","Key couldn't be empty");
-            }
-            if (model.Name == String.Empty)
-            {
-                ModelState.AddModelError("Name", "Name couldn't be empty");
-            }
-            if (model.Description == String.Empty)
-            {
-                ModelState.AddModelError("Description", "Description couldn't be empty");
-            }
-            if (ModelState.IsValid)
-            {
-                try
+                if (ModelState.IsValid)
                 {
-                    _gameService.AddGame(Mapper.Map<GameViewModel, GameDTO>(model));
-                    return new HttpStatusCodeResult(HttpStatusCode.Created);
+                    try
+                    {
+                        _gameService.AddGame(Mapper.Map<GameViewModel, GameDTO>(model));
+                        return new HttpStatusCodeResult(HttpStatusCode.Created);
+                    }
+                    catch (ArgumentNullException e)
+                    {
+                        _logger.Error(
+                            $"Object to add is null {e.Message}  TargetSite: {e.TargetSite}  StackTrace {e.StackTrace}");
+                    }
+                    catch (ArgumentException e)
+                    {
+                        _logger.Error($"{e.Message}  TargetSite: {e.TargetSite}  StackTrace {e.StackTrace}");
+                    }
+
                 }
-                catch (ArgumentNullException e)
-                {
-                    _logger.Error($"Object to add is null {e.Message}  TargetSite: {e.TargetSite}  StackTrace {e.StackTrace}");
-                    return new HttpStatusCodeResult(404);
-                }
-                catch (ArgumentException e)
-                {
-                    _logger.Error($"{e.Message}  TargetSite: {e.TargetSite}  StackTrace {e.StackTrace}");
-                    return new HttpStatusCodeResult(404);
-                }
-            }
-            else
-            {
                 return new HttpStatusCodeResult(404);
-            } 
+            }else return new HttpStatusCodeResult(500);
         }
         [HttpPost]
         [PerfomanceAction]
         [OutputCache(Duration = 60)]
-        public HttpStatusCodeResult UpdateGame(GameViewModel model)
+        public HttpStatusCodeResult update(GameViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -164,7 +152,7 @@ namespace Task.Controllers
         [HttpPost]
         [PerfomanceAction]
         [OutputCache(Duration = 60)]
-        public HttpStatusCodeResult RemoveGame(int key)
+        public HttpStatusCodeResult remove(int key)
         {
             if (key > 0)
             {

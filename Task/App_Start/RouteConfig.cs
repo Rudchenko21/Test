@@ -17,28 +17,23 @@ namespace Task
             routes.MapRoute(
                 name: "gameGetAllGames",
                 url: "games/",
-                defaults: new { controller = "Game", action = "GetAllGames" }
+                defaults: new {controller = "Game", action = "GetAllGames"}
             );
             routes.MapRoute(
-                "UpdateGame",
-                url: "games/update",
-                defaults: new { controller = "Game", action = "UpdateGame" }
-            );
-            routes.MapRoute(
-                "RemoveGame",
-                url: "games/remove",
-                defaults: new { controller = "Game", action = "RemoveGame" }
-            );
+               name: "GameInfo",
+               url: "game/{key}",
+               defaults: new { controller = "Game", action = "GetGameByKey" }
+           );
             routes.MapRoute(
                 "CreateGame",
                 url: "games/new",
                 defaults: new { controller = "Game", action = "AddGame" }
             );
             routes.MapRoute(
-               name: "GameInfo",
-               url: "games/{key}",
-               defaults: new { controller = "Game", action = "GetGameByKey" }
-           );
+                "UpdateGame",
+                url: "games/{action}",
+                defaults: new { controller = "Game", action = "update" }
+                );
             routes.MapRoute(
                 name: "GetCommentByName",
                 url: "games/{gamekey}/comment",

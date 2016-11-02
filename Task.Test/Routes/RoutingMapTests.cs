@@ -21,18 +21,18 @@ namespace Task.Test.Routes
             _routes = RouteTable.Routes;
             RouteConfig.RegisterRoutes(_routes);
         }
-
+        //вот эти два роута не работают, при чем первый отлично работает в браузере
         //[TestCase("~/games/2/comment", "Game", "GetAllCommentsByGames")]
         //[TestCase("~/games/1/newcomment", "Game", "AddCommentToGame")]
 
         [Test]
         [TestCase("~/", "Game", "GetAllGames")]
         [TestCase("~/games", "Game", "GetAllGames")]
-        [TestCase("~/games/1", "Game", "GetGameByKey")]
+        [TestCase("~/game/1", "Game", "GetGameByKey")]
         [TestCase("~/games/1/download", "Game", "DownloadGameToFile")]
         [TestCase("~/games/new", "Game", "AddGame")]
-        [TestCase("~/games/update", "Game", "UpdateGame")]
-        [TestCase("~/games/remove", "Game", "RemoveGame")]
+        [TestCase("~/games/update", "Game", "update")]
+        [TestCase("~/games/remove", "Game", "remove")]
         public void DefaultRoute(string url, string expectedController, string expectedAction)
         {
             // Arrange

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Task.BLL.DTO;
 using Task.BLL.Interfaces;
+using Task.BLL.Nlog;
 using Task.DAL.Entities;
 using Task.DAL.Interfaces;
 
@@ -19,15 +20,32 @@ namespace Task.BLL.Services
         {
             this.db = db;
         }
-        public IEnumerable<CommentDTO> GetAllByGame(int Key)
+        public ICollection<CommentDTO> GetAllByGame(string Key)
         {
-            return Mapper.Map<IEnumerable<Comment>, IEnumerable<CommentDTO>>(this.db.Comment.GetAllByInclude(m=>m.Game.Key==Key,"Comments"));
+                return
+                    Mapper.Map<ICollection<Comment>, ICollection<CommentDTO>>(
+                        this.db.Comment.Get(m => m.Game.Key == Key).ToList());
         }
-        public void AddCommentToGame(CommentDTO item)
+
+        public bool ExistEntity(string Key)
+        {
+            return this.db.Comment.Get(m => m.Game.Key== Key).Count > 0;
+        }
+        public bool AddCommentToGame(CommentDTO item)
         {
             if(item!=null)
             {
-                this.db.Comment.Add(Mapper.Map<Comment>(item));this.db.SaveChanges();
+                if (!ExistEntity(item.GameKey))
+                {
+                    this.db.Comment.Add(Mapper.Map<Comment>(item));
+                    this.db.SaveChanges();
+                    return true;
+                }
+                else return false;
+            }
+            else
+            {
+                return false;
             }
         }
     }

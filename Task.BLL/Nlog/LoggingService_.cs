@@ -19,23 +19,23 @@ namespace Task.BLL.Nlog
         }
         public void Info(string message)
         {
-            logger.Info( "{message}");
+            logger.Info( $"{message}");
         }
         public void Error(string message)
         {
-            logger.Error( "{message}");
+            logger.Error( $"{message}");
         }
         public void Error(Exception e)
         {
-            logger.Error( "Message : {e.Message} TargetSite : {e.TargetSite} StackTrace : {e.StackTrace}");
+            logger.Error( $"Message : {e.Message} TargetSite : {e.TargetSite} StackTrace : {e.StackTrace}");
         }
         public void Error(Exception e, string message)
         {
-            logger.Error( "Message : {message} TargetSite : {e.TargetSite} StackTrace : {e.StackTrace}");
+            logger.Error( $"Message : {message} TargetSite : {e.TargetSite} StackTrace : {e.StackTrace}");
         }
         public void Debug(string message)
         {
-            logger.Debug( "{message}");
+            logger.Debug( $"{message}");
         }
     }
 }

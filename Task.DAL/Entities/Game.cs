@@ -11,7 +11,10 @@ namespace Task.DAL.Entities
     public class Game
     {
         [Key]
-        public int Key { get; set; }
+        public int Id { get; set; }
+        [StringLength(65)]
+        [Index(IsUnique = true)]
+        public  string Key { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }

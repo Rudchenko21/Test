@@ -1,6 +1,8 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Task.BLL.DTO;
@@ -9,6 +11,7 @@ using Task.BLL.Interfaces;
 using Task.DAL.Interfaces;
 using Task.DAL.UnitOfWork;
 using AutoMapper;
+using Task.BLL.Nlog;
 using Task.DAL.Entities;
 
 namespace Task.BLL.Services
@@ -16,20 +19,18 @@ namespace Task.BLL.Services
     public class GameService:IGameService
     {
         private readonly IUnitOfWork db;
-        public GameService(IUnitOfWork db)
+        private readonly ILoggingService _logger;
+        public GameService(IUnitOfWork db,ILoggingService _logger)
         {
             this.db = db;
+            this._logger = _logger;
         }
         //get all games
         public ICollection<GameDTO> GetAll()
         {
-            if(this.db.Game.GetAll().ToList().Count>0)
-            {
-                return Mapper.Map<ICollection<Game>, ICollection<GameDTO>>(this.db.Game.GetAll().ToList());
-            }
-            return null;
+            return Mapper.Map<ICollection<Game>, ICollection<GameDTO>>(this.db.Game.GetAll().ToList()); ;
         }
-        public void AddGame(GameDTO newGame)
+        public bool AddGame(GameDTO newGame)
         {
             if (newGame != null)
             {
@@ -37,10 +38,19 @@ namespace Task.BLL.Services
                 {
                     this.db.Game.Add(Mapper.Map<GameDTO, Game>(newGame));
                     db.SaveChanges();
+                    return true;
                 }
-            } 
+                else throw new ArgumentException("This object has already included in database");
+            }
+            else throw new ArgumentNullException();
         }
+
         public bool ExistEntity(int Key)
+        {
+            return this.db.Game.Get(m => m.Id == Key).Count > 0;
+        }
+
+        public bool ExistStringKey(string Key)
         {
             return this.db.Game.Get(m => m.Key == Key).Count > 0;
         }
@@ -48,11 +58,21 @@ namespace Task.BLL.Services
         {
             if (key > 0)
             {
-                if (this.db.Game.Get(m => m.Key == key).Count == 0) { 
+                if (this.db.Game.Get(m => m.Id == key).Count == 1)
+                {
                 return Mapper.Map<Game, GameDTO>(this.db.Game.GetById(key));
-               }return null;
+               }
+                throw new ArgumentNullException();
             }
-            else return null;
+            else throw new IndexOutOfRangeException();
+        }
+        public GameDTO GetGameByNameKey(string key)
+        {
+            if (key!=String.Empty)
+            {
+                    return Mapper.Map<Game, GameDTO>(this.db.Game.Get(m=>m.Key==key).ToList()[0]);
+            }
+            else throw new ArgumentNullException("String is empty. Game's key can't be empty");
         }
         public IEnumerable<GameDTO> GetByGenre(int Key)
         {
@@ -64,20 +84,22 @@ namespace Task.BLL.Services
         }
         public void DeleteGame(int key)
         {
-            if (key != 0)
+            if (key >= 0)
             {
                 if (this.GetGameByKey(key)!=null)
                 {
                     this.db.Game.Delete(key);
                     this.db.SaveChanges();
                 }
+                else throw new ArgumentNullException("No records were found with such key in database");
             }
+            else throw  new ArgumentException("Invalid key for delete");
         }
         public void Edit(GameDTO item)
         {
             if (item != null)
             {
-                if (this.GetGameByKey(item.Key) != null)
+                if (this.GetGameByKey(item.Id) != null)
                 {
                     this.db.Game.Edit(Mapper.Map<GameDTO, Game>(item));
                     db.SaveChanges();

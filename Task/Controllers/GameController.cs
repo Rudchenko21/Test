@@ -21,99 +21,163 @@ namespace Task.Controllers
     [NLogException]
     public class GameController : Controller
     {
-        IGameService gameService;
-        ICommentService commentService;
-        ILoggingService logger;
-        //static Logger logger = LogManager.GetCurrentClassLogger();
+        private readonly IGameService _gameService;
+        private readonly ICommentService _commentService;
+        private readonly ILoggingService _logger;
+        //static Logger _logger = LogManager.GetCurrentClassLogger();
         public GameController(IGameService gameServ, ICommentService commServ,ILoggingService logger)
         {
-            this.gameService = gameServ;
-            this.commentService = commServ;
-            this.logger = logger;
+            this._gameService = gameServ;
+            this._commentService = commServ;
+            this._logger = logger;
         }
         [PerfomanceAction]
-        public JsonResult GetAllGames()
+        public ActionResult GetAllGames()
         {
-            logger.Info("All games was shown by method GetAllGames() in GameController");            
-            return Json(Mapper.Map<IEnumerable<GameDTO>, IEnumerable<GameViewModel>>(gameService.GetAll()), JsonRequestBehavior.AllowGet);
+            IEnumerable<GameViewModel> games;
+            try
+            {
+                games = Mapper.Map<IEnumerable<GameDTO>, IEnumerable<GameViewModel>>(_gameService.GetAll());
+            }
+            catch (ArgumentException e)
+            {
+                _logger.Error(e);
+                return HttpNotFound();
+            }
+            return Json(games, JsonRequestBehavior.AllowGet);
         }
         [PerfomanceAction]
         public ActionResult GetAllGamesByGenre(int id)
         {
-            if(!this.gameService.ExistEntity(id))
+            if(!this._gameService.ExistEntity(id))
             {
                 return HttpNotFound();
             }
-            logger.Info( "All games were shown for genre with key : {id} by GetAllGamesByGenre in GameController");
-            return Json(Mapper.Map<IEnumerable<GameDTO>, IEnumerable<GameViewModel>>(gameService.GetByGenre(id)), JsonRequestBehavior.AllowGet);
+            return Json(Mapper.Map<IEnumerable<GameDTO>, IEnumerable<GameViewModel>>(_gameService.GetByGenre(id)), JsonRequestBehavior.AllowGet);
         }
         [PerfomanceAction]
-        public JsonResult GetAllGamesByPlatformType(int id)
+        public ActionResult GetAllGamesByPlatformType(int id)
         {
-            logger.Info( "All games were shown for platformtype with key : {id} by GetAllGamesByPlatformType in GameController");
-            return Json(Mapper.Map<IEnumerable<GameDTO>, IEnumerable<GameViewModel>>(gameService.GetAllByPlatformType(id)), JsonRequestBehavior.AllowGet);
+            if (id <= 0)
+            {
+                return HttpNotFound();
+            }
+            return Json(Mapper.Map<IEnumerable<GameDTO>, IEnumerable<GameViewModel>>(_gameService.GetAllByPlatformType(id)), JsonRequestBehavior.AllowGet);
         }
         [PerfomanceAction]
         public FileResult DownloadGameToFile(int gamekey)
         {
-            TxtWriter.WriteToFile(Path.Combine(Server.MapPath("~/Download"), "GameInfo.txt"), Mapper.Map<GameDTO, GameViewModel>(gameService.GetGameByKey(gamekey)).ToString());
-            logger.Info( "File GameInfo.txt with detailed description of game with the gey {gamekey} by performing of method DownloadGameToFile in GameController");
+            TxtWriter.WriteToFile(Path.Combine(Server.MapPath("~/Download"), "GameInfo.txt"), Mapper.Map<GameDTO, GameViewModel>(_gameService.GetGameByKey(gamekey)).ToString());
             return File("/Download/GameInfo.txt", "application/text");
         }
         [PerfomanceAction]
-        public JsonResult GetGameByKey(int key)
+        public JsonResult GetGameByKey(string key)
         {
-            logger.Info( "Game with key : {key} was shown by method GetGameByKey in GameController");
-            return Json(Mapper.Map<GameDTO, GameViewModel>(gameService.GetGameByKey(key)), JsonRequestBehavior.AllowGet);
+            return Json(Mapper.Map<GameDTO, GameViewModel>(_gameService.GetGameByNameKey(key)), JsonRequestBehavior.AllowGet);
         }
         [PerfomanceAction]
-        public JsonResult GetAllCommentsByGames(int gamekey)
+        public ActionResult GetAllCommentsByGames(string gamekey)
         {
-            var a = (commentService.GetAllByGame(gamekey));
-            logger.Info( "Get comments by game with the key : {gamekey} was shown by method GetAllCommentsByGames");
-            return Json(a, JsonRequestBehavior.AllowGet);
-        }
-        [HttpPost]
-        [PerfomanceAction]
-        [OutputCache(Duration = 60, Location = OutputCacheLocation.Server)]
-        public HttpStatusCodeResult AddCommentToGame(CommentViewModel item)
-        {
-            commentService.AddCommentToGame(Mapper.Map<CommentDTO>(item));
-            logger.Info( "New comment was succesfully added to game with the key of {item.GameKey} by AddCommentToGame in  GameController");
-            return new HttpStatusCodeResult(HttpStatusCode.Created);
+            if (_gameService.ExistStringKey(gamekey))
+            {
+                var a =  Mapper.Map<IEnumerable<CommentDTO>,IEnumerable<CommentViewModel>>(_commentService.GetAllByGame(gamekey));
+                return Json(a, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return new HttpStatusCodeResult(404);
+            }
         }
 
         [HttpPost]
         [PerfomanceAction]
-        [OutputCache(Duration = 60, Location = OutputCacheLocation.Server)]
+        [OutputCache(Duration = 60)]
+        public HttpStatusCodeResult AddCommentToGame(CommentViewModel item)
+        {
+            if (ModelState.IsValid)
+            {
+                if (item != null)
+                {
+                    _commentService.AddCommentToGame(Mapper.Map<CommentDTO>(item));
+                    return new HttpStatusCodeResult(HttpStatusCode.Created);
+                }
+                else return new HttpStatusCodeResult(500);
+            }
+            else
+            {
+                return new HttpStatusCodeResult(404);
+            }
+        }
+
+        [HttpPost]
+        [PerfomanceAction]
+        [OutputCache(Duration = 60)]
         public HttpStatusCodeResult AddGame(GameViewModel model)
         {
-            gameService.AddGame(Mapper.Map<GameViewModel, GameDTO>(model));
-            logger.Info( "New game was added succesfully by AddGame in GameController");
-            return new HttpStatusCodeResult(HttpStatusCode.Created);
+            if (model.Key == String.Empty)
+            {
+                ModelState.AddModelError("Key","Key couldn't be empty");
+            }
+            if (model.Name == String.Empty)
+            {
+                ModelState.AddModelError("Name", "Name couldn't be empty");
+            }
+            if (model.Description == String.Empty)
+            {
+                ModelState.AddModelError("Description", "Description couldn't be empty");
+            }
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _gameService.AddGame(Mapper.Map<GameViewModel, GameDTO>(model));
+                    return new HttpStatusCodeResult(HttpStatusCode.Created);
+                }
+                catch (ArgumentNullException e)
+                {
+                    _logger.Error($"Object to add is null {e.Message}  TargetSite: {e.TargetSite}  StackTrace {e.StackTrace}");
+                    return new HttpStatusCodeResult(404);
+                }
+                catch (ArgumentException e)
+                {
+                    _logger.Error($"{e.Message}  TargetSite: {e.TargetSite}  StackTrace {e.StackTrace}");
+                    return new HttpStatusCodeResult(404);
+                }
+            }
+            else
+            {
+                return new HttpStatusCodeResult(404);
+            } 
         }
         [HttpPost]
         [PerfomanceAction]
-        [OutputCache(Duration = 60, Location = OutputCacheLocation.Server)]
-        public HttpStatusCodeResult update(GameViewModel model)
+        [OutputCache(Duration = 60)]
+        public HttpStatusCodeResult UpdateGame(GameViewModel model)
         {
-            gameService.Edit(Mapper.Map<GameViewModel, GameDTO>(model));
-            logger.Info( "Game with key : {model.Key} was updated succesfully by update in GameController");
-            return new HttpStatusCodeResult(HttpStatusCode.Created);
+            if (ModelState.IsValid)
+            {
+                _gameService.Edit(Mapper.Map<GameViewModel, GameDTO>(model));
+                return new HttpStatusCodeResult(HttpStatusCode.Created);
+            }
+            else return HttpNotFound();
         }
         [HttpPost]
         [PerfomanceAction]
-        [OutputCache(Duration = 60, Location = OutputCacheLocation.Server)]
-        public HttpStatusCodeResult remove(int key)
+        [OutputCache(Duration = 60)]
+        public HttpStatusCodeResult RemoveGame(int key)
         {
             if (key > 0)
             {
-                gameService.DeleteGame(key);
-                logger.Info( "Game with key : {key} was removed succesfully");
+                _gameService.DeleteGame(key);
                 return new HttpStatusCodeResult(HttpStatusCode.Created);
             }
-            logger.Info( "Game with key {key} was not removed. It could occur because key wasn't find in your db");
-            return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            
+            return new HttpStatusCodeResult(500);
+        }
+
+        public JsonResult IsGameIdExist(int GameId)
+        {
+            return Json(_gameService.ExistEntity(GameId), JsonRequestBehavior.AllowGet);
         }
     }
 }

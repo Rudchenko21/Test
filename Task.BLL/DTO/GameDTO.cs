@@ -9,7 +9,8 @@ namespace Task.BLL.DTO
 {
     public class GameDTO
     {
-        public int Key { get; set; }
+        public int Id { get; set; }
+        public string Key { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public ICollection<PlatformTypeDTO> PlatformTypes { get; set; }

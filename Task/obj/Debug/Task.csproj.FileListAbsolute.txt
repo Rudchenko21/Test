@@ -201,10 +201,8 @@ C:\Users\Iaroslav_Rudchenko\Documents\Task1\Task\bin\System.Web.Razor.dll
 C:\Users\Iaroslav_Rudchenko\Documents\Task1\Task\bin\System.Web.Webpages.Deployment.dll
 C:\Users\Iaroslav_Rudchenko\Documents\Task1\Task\bin\System.Web.Webpages.dll
 C:\Users\Iaroslav_Rudchenko\Documents\Task1\Task\bin\System.Web.Webpages.Razor.dll
-C:\Users\Iaroslav_Rudchenko\Documents\Task1\Task\bin\Task.BLL.dll
 C:\Users\Iaroslav_Rudchenko\Documents\Task1\Task\bin\Task.DAL.dll
 C:\Users\Iaroslav_Rudchenko\Documents\Task1\Task\bin\WebActivatorEx.dll
-C:\Users\Iaroslav_Rudchenko\Documents\Task1\Task\bin\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
 C:\Users\Iaroslav_Rudchenko\Documents\Task1\Task\bin\AutoMapper.xml
 C:\Users\Iaroslav_Rudchenko\Documents\Task1\Task\bin\EntityFramework.xml
 C:\Users\Iaroslav_Rudchenko\Documents\Task1\Task\bin\EntityFramework.SqlServer.xml
@@ -229,8 +227,12 @@ C:\Users\Iaroslav_Rudchenko\Documents\Task1\Task\bin\System.Web.Helpers.xml
 C:\Users\Iaroslav_Rudchenko\Documents\Task1\Task\bin\System.Web.Mvc.xml
 C:\Users\Iaroslav_Rudchenko\Documents\Task1\Task\obj\Debug\Task.dll
 C:\Users\Iaroslav_Rudchenko\Documents\Task1\Task\obj\Debug\Task.pdb
+C:\Users\Iaroslav_Rudchenko\Documents\Task1\Task\obj\Debug\Task.csprojResolveAssemblyReference.cache
+C:\Users\Iaroslav_Rudchenko\Documents\Task1\Task\bin\Task.BLL.dll
 C:\Users\Iaroslav_Rudchenko\Documents\Task1\Task\bin\Task.Test.dll
+C:\Users\Iaroslav_Rudchenko\Documents\Task1\Task\bin\nunit.framework.dll
+C:\Users\Iaroslav_Rudchenko\Documents\Task1\Task\bin\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
 C:\Users\Iaroslav_Rudchenko\Documents\Task1\Task\bin\Castle.Core.dll
 C:\Users\Iaroslav_Rudchenko\Documents\Task1\Task\bin\Task.Test.pdb
+C:\Users\Iaroslav_Rudchenko\Documents\Task1\Task\bin\nunit.framework.xml
 C:\Users\Iaroslav_Rudchenko\Documents\Task1\Task\bin\Castle.Core.xml
-C:\Users\Iaroslav_Rudchenko\Documents\Task1\Task\obj\Debug\Task.csprojResolveAssemblyReference.cache

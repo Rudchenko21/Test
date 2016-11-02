@@ -47,10 +47,6 @@ namespace Task.DAL.Repository
                 this.db.Entry(editItem).State = EntityState.Modified;
             }
         }
-        public IEnumerable<T> GetAllByInclude(Expression<Func<T, bool>> filter, string name)
-        {
-            return this.entity.Include(name).Where(filter);
-        }
         public virtual ICollection<T> Get(Expression<Func<T, bool>> filter = null)
         {
             IQueryable<T> query =entity;
@@ -58,7 +54,7 @@ namespace Task.DAL.Repository
             {
                 query = query.Where(filter);
             }
-                return query.ToList();
+            return query.ToList();
         }
         public virtual ICollection<T> GetAll()
         {

@@ -14,6 +14,8 @@ namespace Task.DAL.Entities
         public int? ParentId { get; set; }
         [Key]
         public int GenreId { get; set; }
+        [StringLength(65)]
+        [Index(IsUnique = true)]
         public string Name { get; set; }
         public virtual ICollection<Game> Games { get; set; }
 

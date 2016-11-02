@@ -19,28 +19,32 @@ using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
 using Task.BLL.Interfaces;
 using Task.Controllers;
 using System.Web.Mvc;
+using NUnit.Framework;
 using Task.BLL.Nlog;
 using Task.ViewModel;
 using Task.MappingUI;
+using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace Task.Test.Controllers
 {
-    [TestClass]
+    [TestFixture]
     public class GameTestController
     {
         private Mock<IGameService> _mockGameService;
+        private Mock<ICommentService> _mockCommentService;
         private GameController controller;
         private Mock<ILoggingService> logger;
-        private Mock<IGameService> _mockGame;
         private List<Game> _gameList;
-       [TestInitialize]
+        private List<Comment> _commentList;
+       [SetUp]
         public void Setup()
         {
             AutoMapperConfiguration.Configure();
 
             this._mockGameService = new Mock<IGameService>();
+            this._mockCommentService=new Mock<ICommentService>();
             logger = new Mock<ILoggingService>();
-            this.controller = new Task.Controllers.GameController(_mockGameService.Object, null, logger.Object);
+            this.controller = new Task.Controllers.GameController(_mockGameService.Object, _mockCommentService.Object, logger.Object);
 
             var genres = new List<Genre>{
                 new Genre{Name="fdf",GenreId=1,ParentId=0}
@@ -49,12 +53,15 @@ namespace Task.Test.Controllers
                 new PlatformType{Key=1,Name="sd"}
             };
             _gameList = new List<Game>{
-                new Game{Key=1, Name="Fifa",Description="Football",Genres=(genres),PlatformTypes=(ptypes)},
-                new Game{Key=2, Name="Fifa",Description="Football",Genres=(genres),PlatformTypes=(ptypes)}
+                new Game{Id= 1, Name="Fifa",Description="Football",Genres=(genres),PlatformTypes=(ptypes)},
+                new Game{Id= 2, Name="Fifa",Description="Football",Genres=(genres),PlatformTypes=(ptypes)}
             };
-
+            _commentList=new List<Comment>
+            {
+                new Comment { }
+            };
         }
-        [TestMethod]
+        [Test]
         public void GetAllGames_ReturnList()
         {
             //Arrange
@@ -63,31 +70,129 @@ namespace Task.Test.Controllers
             var result = ((controller.GetAllGames() as JsonResult).Data as IEnumerable<GameViewModel>).ToList();
             //Assert
             Assert.AreEqual(2, result.Count);
-            Assert.AreEqual(1, result[0].Key);
-            Assert.AreEqual(2, result[1].Key);
-        }
-        [TestMethod]
-        public void GetAllGames_GetGamesIfNoRecodrs_Null()
-        {
-            ////Arrange
-            //_mockGameService.Setup(m => m.GetAll()).Returns(Mapper.Map<ICollection<GameDTO>>(null));
-            ////Act
-            //var result = ((controller.GetAllGames() as JsonResult).Data as IEnumerable<GameViewModel>).ToList();
-            ////Assert
-            //Assert.AreEqual(0, result.Count);
+            Assert.AreEqual(1, result[0].Id);
+            Assert.AreEqual(2, result[1].Id);
         }
 
-        [TestMethod]
-        public void GetAllGamesByGenre_KeyOfGenreNotValid_ReturnListGamesNotSuccessible()
+        [Test]
+        public void GetAllCommentsByGame_KeyValid()
         {
-            int key = -1;
-            //Arrange
-            
+             _mockCommentService.Setup(m => m.GetAllByGame(It.IsAny<string>())).Returns(Mapper.Map<ICollection<CommentDTO>>(_commentList));
+            _mockGameService.Setup(m => m.ExistStringKey(It.IsAny<string>())).Returns(true);
             //Act
-            var result = ((controller.GetAllGamesByGenre(key) as JsonResult).Data as IEnumerable<GameViewModel>).ToList();
+            var result = ((controller.GetAllCommentsByGames("GTA_5") as JsonResult).Data as IEnumerable<CommentViewModel>).ToList();
             //Assert
             Assert.AreEqual(1, result.Count);
-            
+        }
+        
+        [Test]
+        public void AddCommentToGame_NotValidModelState_StatusCode404()
+        {
+            controller.ModelState.AddModelError("test", "test");
+            var statusCode = controller.AddCommentToGame(It.IsAny<CommentViewModel>()) as HttpStatusCodeResult;
+            Assert.AreEqual(statusCode.StatusCode, 404);
+        }
+
+        [Test]
+        public void AddCommentToGame_ValidModel_StatusCode201()
+        {
+            var a = new CommentViewModel();
+            var statusCode = controller.AddCommentToGame(a) as HttpStatusCodeResult;
+            Assert.AreEqual(statusCode.StatusCode, 201);
+        }
+        [Test]
+        public void AddCommentToGame_NullModel_StatusCode500()
+        {
+            var statusCode = controller.AddCommentToGame(It.IsAny<CommentViewModel>()) as HttpStatusCodeResult;
+            Assert.AreEqual(statusCode.StatusCode, 500);
+        }
+
+        
+        [Test]
+        public void AddGame_NotValidModelState_StatusCode404()
+        {
+            controller.ModelState.AddModelError("test", "test");
+            var statusCode = controller.AddGame(It.IsAny<GameViewModel>()) as HttpStatusCodeResult;
+            Assert.AreEqual(statusCode.StatusCode, 404);
+        }
+        [Test]
+        public void AddGame_NullModel_StatusCode500()
+        {
+            var statusCode = controller.AddGame(It.IsAny<GameViewModel>()) as HttpStatusCodeResult;
+            Assert.AreEqual(statusCode.StatusCode, 500);
+        }
+        [Test]
+        public void AddGame_ValidModel_StatusCode201()
+        {
+            var a = new GameViewModel();
+            var statusCode = controller.AddGame(a) as HttpStatusCodeResult;
+            Assert.AreEqual(statusCode.StatusCode, 201);
+        }
+        [Test]
+        public void Remove_ValidModelState_StatusCode200()
+        {
+            var statusCode = controller.RemoveGame(1) as HttpStatusCodeResult;
+            Assert.AreEqual(statusCode.StatusCode, 201);
+        }
+        [Test]
+        public void Remove_NotValidKey_StatusCode500()
+        {
+            var statusCode = controller.RemoveGame(-1) as HttpStatusCodeResult;
+            Assert.AreEqual(statusCode.StatusCode, 500);
+        }
+        [Test]
+        public void Update_ValidModelState_StatusCode200()
+        {
+            var statusCode = controller.UpdateGame(It.IsAny<GameViewModel>()) as HttpStatusCodeResult;
+            Assert.AreEqual(statusCode.StatusCode, 201);
+        }
+        [Test]
+        public void Update_ValidModelState_StatusCode400()
+        {
+            controller.ModelState.AddModelError("test", "test");
+            var statusCode = controller.UpdateGame(It.IsAny<GameViewModel>()) as HttpStatusCodeResult;
+            Assert.AreEqual(statusCode.StatusCode, 404);
+        }
+
+        [Test]
+        public void GetAllGamesByGenre_NotValidKey_StatusCode404()
+        {
+            _mockGameService.Setup(m => m.ExistEntity(It.IsAny<int>())).Returns(false);
+            var statuscode = controller.GetAllGamesByGenre(It.IsAny<int>()) as HttpStatusCodeResult;
+            Assert.AreEqual(statuscode.StatusCode,404);
+        }
+
+        [Test]
+        public void GetAllGamesByGenre_ValidKey_ListWithGames()
+        {
+            _mockGameService.Setup(m => m.ExistEntity(It.IsAny<int>())).Returns(true);
+            _mockGameService.Setup(m => m.GetByGenre(It.IsAny<int>()))
+                .Returns(Mapper.Map<ICollection<GameDTO>>(_gameList));
+
+            var result = ((controller.GetAllGamesByGenre(It.IsAny<int>()) as JsonResult).Data as IEnumerable<GameViewModel>).ToList();
+
+            _mockGameService.Verify(m=>m.GetByGenre(It.IsAny<int>()),Times.Once);
+            Assert.AreEqual(result.Count, 2);
+        }
+
+        [Test]
+        public void GetAllGamesByPlatformType_NotValidKey_StatusCode404()
+        {
+            int value = 0;
+            var result=controller.GetAllGamesByPlatformType(value) as HttpStatusCodeResult;
+            Assert.AreEqual(result.StatusCode,404);
+        }
+
+        [Test]
+        public void GetAllGamesByPlatformType_ValidKey_ListWithGames()
+        {
+            _mockGameService.Setup(m => m.GetAllByPlatformType(It.IsAny<int>())).Returns(Mapper.Map<ICollection<GameDTO>>(_gameList));
+            var result =
+            ((controller.GetAllGamesByPlatformType(1) as JsonResult).Data as
+                IEnumerable<GameViewModel>).ToList();
+
+            _mockGameService.Verify(m=>m.GetAllByPlatformType(It.IsAny<int>()),Times.Once);
+            Assert.AreEqual(2,result.Count);
         }
     }
 }

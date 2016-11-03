@@ -63,12 +63,6 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
     <Reference Include="Task.DAL">
       <HintPath>..\Task.DAL\bin\Debug\Task.DAL.dll</HintPath>
     </Reference>
@@ -78,18 +72,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="DTO\CommentByGameDTO.cs" />
     <Compile Include="DTO\CommentDTO.cs" />
     <Compile Include="DTO\GameDTO.cs" />
     <Compile Include="DTO\GenreDTO.cs" />
     <Compile Include="DTO\PlatformTypeDTO.cs" />
-    <Compile Include="Filters\LogExceptionFilter.cs" />
     <Compile Include="Interfaces\ICommentService.cs" />
     <Compile Include="Interfaces\IGameService.cs" />
     <Compile Include="Interfaces\IWriter.cs" />
-    <Compile Include="Mapping\EntityToDomainMappingProfile.cs" />
-    <Compile Include="Models\ExceptionClass.cs" />
+    <Compile Include="Mapping\DtoToEntityMappingProfile.cs" />
+    <Compile Include="Mapping\EntityToDtoMappingProfile.cs" />
     <Compile Include="Models\TxtWriter.cs" />
     <Compile Include="NinjectDependencyResolver\NinjectResolver.cs" />
     <Compile Include="Interfaces\ILoggingService.cs" />
@@ -97,7 +89,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CommentService.cs" />
     <Compile Include="Services\GameService.cs" />
-    <Compile Include="Task\DAL\GameStoreContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AppData\" />

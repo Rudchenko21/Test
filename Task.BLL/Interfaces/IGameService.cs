@@ -12,14 +12,14 @@ namespace Task.BLL.Interfaces
     {
         ICollection<GameDTO> GetAll();
         bool AddGame(GameDTO newGame);
-        GameDTO GetGameByKey(int key);
-        GameDTO GetGameByNameKey(string key);
-        void DeleteGame(int key);
-        void Edit(GameDTO item); // todo if you name all methods like DoSomethingWithEntity, plase use this convention everywhere
-        IEnumerable<GameDTO> GetByGenre(int Key); // todo GetByGenre and GetAllByPlatformType, please use one convention
-        IEnumerable<GameDTO> GetAllByPlatformType(int Key);
-        bool ExistEntity(int Key); // todo i guess, id, not key
-        bool ExistStringKey(string Key); // todo you can name it like ExistEntity too and variable will "gameKey"
+        GameDTO GetGameById(int Id);
+        GameDTO SearchByKey(string key);
+        void DeleteGame(int Id);
+        void EditGame(GameDTO item);
+        IEnumerable<GameDTO> GetGamesByGenre(int Id);
+        IEnumerable<GameDTO> GetGamesByPlatformType(int Key);
+        bool ExistEntity(int Id); 
+        bool ExistEntity(string gamekey);
     }
 
 }

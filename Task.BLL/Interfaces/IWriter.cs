@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Task.BLL.Interfaces
+﻿namespace Task.BLL.Interfaces
 {
-    public interface IWriter // todo looks like unuseless interface
+    public interface IWriter
     {
-        void WriteToFile(string filename, string Text);
+        void WriteToFile(string filename, string text);
     }
 }

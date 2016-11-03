@@ -10,11 +10,9 @@ using Task.BLL.Nlog;
 
 namespace Task.Filters
 {
-    public class LogIPFilterAttribute: ActionFilterAttribute,IActionFilter // todo please beatufy your classes
-                                                                           // todo ActionFilterAttribute implements IActionFilter, so you don't need it here
+    public class LogIPFilterAttribute: ActionFilterAttribute
     {
-
-        void IActionFilter.OnActionExecuting(ActionExecutingContext filterContext)
+        public void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var logger = DependencyResolver.Current.GetService<ILoggingService>(); // todo good solution :)
             LogIPModel item = new LogIPModel

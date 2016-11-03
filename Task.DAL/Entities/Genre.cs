@@ -13,12 +13,11 @@ namespace Task.DAL.Entities
         [ForeignKey("Parent")]
         public int? ParentId { get; set; }
         [Key]
-        public int GenreId { get; set; }
+        public int Id { get; set; }
         [StringLength(65)]
         [Index(IsUnique = true)]
         public string Name { get; set; }
         public virtual ICollection<Game> Games { get; set; }
-
         public virtual Genre Parent { get; set; }
     }
 }

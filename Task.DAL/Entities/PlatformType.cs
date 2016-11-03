@@ -11,7 +11,7 @@ namespace Task.DAL.Entities
     public class PlatformType
     {
         [Key]
-        public int Key { get; set; } // todo please rename to id
+        public int Id { get; set; }
         [StringLength(65)]
         [Index(IsUnique = true)]
         public string Name { get; set; }

@@ -8,7 +8,6 @@ using Moq;
 using Task.DAL.Entities;
 using Task.DAL.Interfaces;
 using Task.DAL.Context;
-using System.Data.Entity;
 using System.Linq.Expressions;
 using Task.DAL.Repository;
 using Task.BLL.Services;
@@ -19,7 +18,6 @@ using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
 using Task.BLL.Interfaces;
 using Task.Controllers;
 using System.Web.Mvc;
-using NUnit.Core;
 using NUnit.Framework;
 using Task.BLL.Nlog;
 using Task.ViewModel;
@@ -31,12 +29,18 @@ namespace Task.Test.Controllers
     [TestFixture]
     public class GameServiceTest // todo try to beautify this class and apply comments from GameTestController
     {
-        Mock<IUnitOfWork> _mockUnitOfWork;
-        Mock<IRepository<Game>> _mockRepo;
+        private Mock<IUnitOfWork> _mockUnitOfWork;
+
+        private Mock<IRepository<Game>> _mockRepo;
+
         IQueryable<Game> _games;
+
         IGameService _gameService;
+
         Mock<ILoggingService> _logger;
+
         List<Genre> _genres;
+
         List<PlatformType> _platformTypes;
 
         [SetUp]

@@ -10,8 +10,8 @@ namespace Task.DAL.Entities
 {
     public class Comment
     {
-        [Key]
-        public int Key { get; set; } // todo maybe id ?
+        public int Id { get; set; } 
+        public int GameId { get; set; }
         public string Name { get; set; }
         public string Body { get; set; }
         public ICollection<Comment> Comments { get; set; }

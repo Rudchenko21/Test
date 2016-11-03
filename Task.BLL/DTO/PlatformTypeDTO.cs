@@ -8,7 +8,7 @@ namespace Task.BLL.DTO
 {
     public class PlatformTypeDTO
     {
-        public int Key { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
     }
 }

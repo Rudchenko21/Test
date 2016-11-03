@@ -17,22 +17,24 @@ using Task.BLL.Nlog;
 
 namespace Task.Controllers
 {
-    [LogIPFilter] // todo I guess, these two filters can be registered as global filters
-                  // todo https://www.asp.net/mvc/overview/older-versions/hands-on-labs/aspnet-mvc-4-custom-action-filters Task 4: Registering Filters Globally
-    [NLogException]
     public class GameController : Controller
     {
         private readonly IGameService _gameService;
+
         private readonly ICommentService _commentService;
+
         private readonly ILoggingService _logger;
-        //static Logger _logger = LogManager.GetCurrentClassLogger(); // todo please remove all commented code
-        public GameController(IGameService gameServ, ICommentService commServ,ILoggingService logger)
+
+        private readonly IWriter _writer;
+
+        public GameController(IGameService gameServ, ICommentService commServ, ILoggingService logger, IWriter writer)
         {
             this._gameService = gameServ;
             this._commentService = commServ;
             this._logger = logger;
-        }// todo please use empty lines between all methods, logical parts and other for beautifying read code
-        [PerfomanceAction]
+            this._writer = writer;
+        }
+
         public ActionResult GetAllGames()
         {
             IEnumerable<GameViewModel> games;
@@ -47,83 +49,78 @@ namespace Task.Controllers
             }
             return Json(games, JsonRequestBehavior.AllowGet);
         }
-        [PerfomanceAction] // todo looks like this filter can be registered as global filter
+
         public ActionResult GetAllGamesByGenre(int id)
         {
-            if(!this._gameService.ExistEntity(id)) // todo please remove this. where it is not needed
-            {
-                return HttpNotFound();
-            }
-
-            var gamesDtos = _gameService.GetByGenre(id);
+            var gamesDtos = _gameService.GetGamesByGenre(id);
             var gamesViewModels = Mapper.Map<IEnumerable<GameDTO>, IEnumerable<GameViewModel>>(gamesDtos);
-
             return Json(gamesViewModels, JsonRequestBehavior.AllowGet);
+        }
 
-        }// todo please remove empty lines like above, because such things make your code hard-readable
-        [PerfomanceAction]
+
         public ActionResult GetAllGamesByPlatformType(int id)
         {
-            if (id <= 0)
+            IEnumerable<GameViewModel> gameByPlstform;
+            try
             {
+                gameByPlstform =
+                    Mapper.Map<IEnumerable<GameDTO>, IEnumerable<GameViewModel>>(_gameService.GetGamesByPlatformType(id));
+            }
+            catch (ArgumentException e)
+            {
+                _logger.Error(e);
                 return HttpNotFound();
             }
-            return Json(Mapper.Map<IEnumerable<GameDTO>, IEnumerable<GameViewModel>>(_gameService.GetAllByPlatformType(id)), JsonRequestBehavior.AllowGet);
-            // todo please introduce additional variables like at example above
+            return Json(gameByPlstform, JsonRequestBehavior.AllowGet);
         }
-        [PerfomanceAction]
+
+
         public FileResult DownloadGameToFile(int gamekey)
         {
-            // todo this method is untestable by unit tests, please use DI for TxtWriter
-            TxtWriter.WriteToFile(Path.Combine(Server.MapPath("~/Download"), "GameInfo.txt"), Mapper.Map<GameDTO, GameViewModel>(_gameService.GetGameByKey(gamekey)).ToString());
+            var gameToWrite = Mapper.Map<GameDTO, GameViewModel>(_gameService.GetGameById(gamekey)).ToString();
+            _writer.WriteToFile(Path.Combine(Server.MapPath("~/Download"), "GameInfo.txt"), gameToWrite);
             return File("/Download/GameInfo.txt", "application/text");
         }
-        [PerfomanceAction]
-        public JsonResult GetGameByKey(string key)
+
+
+        public ActionResult GetGameByKey(string key)
         {
-            return Json(Mapper.Map<GameDTO, GameViewModel>(_gameService.GetGameByNameKey(key)), JsonRequestBehavior.AllowGet);
+            GameViewModel game;
+            try
+            {
+                game = Mapper.Map<GameDTO, GameViewModel>(_gameService.SearchByKey(key));
+            }
+            catch (ArgumentNullException e)
+            {
+                _logger.Error(e);
+                return new HttpStatusCodeResult(400);
+            }
+            return Json(game, JsonRequestBehavior.AllowGet);
         }
-        [PerfomanceAction]
+
+
         public ActionResult GetAllCommentsByGames(string gamekey)
         {
-            if (_gameService.ExistStringKey(gamekey))
+            IEnumerable<CommentViewModel> comments;
+            try
             {
-                var a =  Mapper.Map<IEnumerable<CommentDTO>,IEnumerable<CommentViewModel>>(_commentService.GetAllByGame(gamekey)); // todo please meanful names of variables
-                return Json(a, JsonRequestBehavior.AllowGet);
+                comments =
+                    Mapper.Map<IEnumerable<CommentDTO>, IEnumerable<CommentViewModel>>(
+                        _commentService.GetAllByGame(gamekey));
             }
-            else
+            catch (ArgumentNullException e)
             {
-                return new HttpStatusCodeResult(404);
+                _logger.Error(e);
+                return  new HttpStatusCodeResult(400);
             }
+            return Json(comments, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpPost]
-        [PerfomanceAction]
-        [OutputCache(Duration = 60)]
-        public HttpStatusCodeResult AddCommentToGame(CommentViewModel item) // todo Single responsibility principle violated. This controller is responsible for managing games
-        {
-            if (ModelState.IsValid)
-            {
-                if (item != null)
-                {
-                    _commentService.AddCommentToGame(Mapper.Map<CommentDTO>(item));
-                    return new HttpStatusCodeResult(HttpStatusCode.Created);
-                }
-                else return new HttpStatusCodeResult(500); // todo I guess, this case is unreachable because ModelState.IsValid should return false when item is null...
-            }
-            else
-            {
-                return new HttpStatusCodeResult(404); // todo when model state is not valid 404 error? Are you sure?
-            }
-        }
 
         [HttpPost]
-        [PerfomanceAction]
         [OutputCache(Duration = 60)]
         public HttpStatusCodeResult AddGame(GameViewModel model)
         {
-            if (model != null) // todo too much if's, I guess, this one: if (ModelState.IsValid) will be enough
-            {
                 if (ModelState.IsValid)
                 {
                     try
@@ -133,49 +130,59 @@ namespace Task.Controllers
                     }
                     catch (ArgumentNullException e)
                     {
-                        _logger.Error(
-                            $"Object to add is null {e.Message}  TargetSite: {e.TargetSite}  StackTrace {e.StackTrace}");
-                        // todo mess at logs. Try to beautify logs. For example: 
-                        // todo _logger.Error($"Try to add null entity. Message: {e.Message}. Method: {e.TargetSite}. StackTrace: {e.StackTrace}.");
+                        _logger.Error(e);
+                        return new HttpStatusCodeResult(400);
                     }
                     catch (ArgumentException e)
                     {
-                        _logger.Error($"{e.Message}  TargetSite: {e.TargetSite}  StackTrace {e.StackTrace}");
+                        _logger.Error(e);
+                        return new HttpStatusCodeResult(400);
                     }
-
                 }
-                return new HttpStatusCodeResult(404);
-            }else return new HttpStatusCodeResult(500);
+                return new HttpStatusCodeResult(HttpStatusCode.NotAcceptable);
         }
+
         [HttpPost]
-        [PerfomanceAction]
         [OutputCache(Duration = 60)]
-        public HttpStatusCodeResult update(GameViewModel model) // todo Follow Code conventions. Methods should starts with capital letter
+        public HttpStatusCodeResult UpdateGame(GameViewModel model)
         {
             if (ModelState.IsValid)
             {
-                _gameService.Edit(Mapper.Map<GameViewModel, GameDTO>(model));
-                return new HttpStatusCodeResult(HttpStatusCode.Created); // todo wrong status code
+                try
+                {
+                    _gameService.EditGame(Mapper.Map<GameViewModel, GameDTO>(model));
+                }
+                catch (ArgumentNullException e)
+                {
+                    _logger.Error(e);
+                    return new HttpStatusCodeResult(400);
+                }
+                return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
-            else return HttpNotFound(); // todo why not found ..? It's just invalid model.
-        }
-        [HttpPost]
-        [PerfomanceAction]
-        [OutputCache(Duration = 60)]
-        public HttpStatusCodeResult remove(int key) // todo I suppose, it's id, not key...
-        {
-            if (key > 0) // todo why verification ?
-            {
-                _gameService.DeleteGame(key);
-                return new HttpStatusCodeResult(HttpStatusCode.Created); // todo wrong status code
-            }
-            
-            return new HttpStatusCodeResult(500); // todo why 500?
+            else return new HttpStatusCodeResult(400);
         }
 
-        public JsonResult IsGameIdExist(int GameId) // todo Follow Code conventions. Variables should starts with small letter
+
+        [HttpPost]
+        [OutputCache(Duration = 60)]
+        public HttpStatusCodeResult RemoveGame(int id)
         {
-            return Json(_gameService.ExistEntity(GameId), JsonRequestBehavior.AllowGet);
+            try
+            {
+                _gameService.DeleteGame(id);
+            }
+            catch (ArgumentNullException e)
+            {
+                _logger.Error(e);
+                return new HttpStatusCodeResult(400);
+            } 
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+
+
+        public JsonResult IsGameIdExist(int gameId)
+        {
+            return Json(_gameService.ExistEntity(gameId), JsonRequestBehavior.AllowGet);
         }
     }
 }

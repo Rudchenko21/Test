@@ -16,15 +16,7 @@ namespace Task.Filters
             var logger = DependencyResolver.Current.GetService<ILoggingService>();
             if (!filterContext.ExceptionHandled)
             {
-                ExceptionClass exitem = new ExceptionClass
-                {
-                    Message = filterContext.Exception.Message,
-                    StackTrace = filterContext.Exception.StackTrace,
-                    TargetSite = filterContext.Exception.TargetSite.ToString(),
-                    StatusCode= filterContext.HttpContext.Response.StatusCode
-                };
-                
-                logger.Error(exitem.ToString()); // todo maybe make sense log just filterContext.Exception here without extra exception..? 
+                logger.Error(filterContext.Exception);
             }
             filterContext.ExceptionHandled = true;
         }

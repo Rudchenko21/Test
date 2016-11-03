@@ -7,7 +7,6 @@ using Moq;
 using Task.DAL.Entities;
 using Task.DAL.Interfaces;
 using Task.DAL.Context;
-using System.Data.Entity;
 using Task.DAL.Repository;
 using Task.BLL.Services;
 using Task.BLL.DTO;
@@ -17,7 +16,6 @@ using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
 using Task.BLL.Interfaces;
 using Task.MappingUI;
 using System.Linq.Expressions;
-using NUnit.Core;
 using NUnit.Framework;
 
 

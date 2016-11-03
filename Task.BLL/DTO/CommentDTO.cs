@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Task.BLL.DTO
 {
     public class CommentDTO
     {
-        public int Key { get; set; }
+        public int Id { get; set; }
         public int GameId { get; set; }
         public string GameKey { get; set; }
         public string Name { get; set; }

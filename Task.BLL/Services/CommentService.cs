@@ -2,11 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Task.BLL.DTO;
 using Task.BLL.Interfaces;
-using Task.BLL.Nlog;
 using Task.DAL.Entities;
 using Task.DAL.Interfaces;
 
@@ -14,39 +11,46 @@ namespace Task.BLL.Services
 {
     public class CommentService:ICommentService
     {
-        private readonly IUnitOfWork db; // todo please use _underscoreConvention, so than you'll not need use this.db
-        // todo rename db to unitOfWork, or something like this. It's not database, it's UnitOfWork.
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CommentService(IUnitOfWork db)
+        public CommentService(IUnitOfWork unitOfWork)
         {
-            this.db = db;
-        }
-        public ICollection<CommentDTO> GetAllByGame(string Key)
-        {
-                return
-                    Mapper.Map<ICollection<Comment>, ICollection<CommentDTO>>(
-                        this.db.Comment.Get(m => m.Game.Key == Key).ToList()); // todo use additional variables
+            this._unitOfWork = unitOfWork;
         }
 
-        public bool ExistEntity(string Key)
+        public ICollection<CommentDTO> GetAllByGame(string key)
         {
-            return this.db.Comment.Get(m => m.Game.Key== Key).Count > 0; // todo you can use .Any() instead .Count > 0
+            if (String.IsNullOrEmpty(key))
+            {
+                var list = Mapper.Map<ICollection<Comment>, ICollection<CommentDTO>>(this._unitOfWork.Comment.Get(game => game.Game.Key == key).ToList());
+                return list;
+            }
+            else throw new ArgumentNullException("Try to get comments by gamekey with null or empty key ");
         }
+
+        public bool ExistEntity(string key)
+        {
+            return this._unitOfWork.Comment.Get(m => m.Game.Key.Equals(key,StringComparison.InvariantCultureIgnoreCase)).Any();
+        }
+
         public bool AddCommentToGame(CommentDTO item)
         {
-            if(item!=null) // todo add spaces, please. It's pretty hard to read
+            bool state = false;
+            if(item != null) 
             {
-                if (!ExistEntity(item.GameKey))
+                if ( !ExistEntity (item.GameKey) )
                 {
-                    this.db.Comment.Add(Mapper.Map<Comment>(item));// todo use additional variables
-                    this.db.SaveChanges();
-                    return true; // todo make sense introduse this to variable and make one return statement
+                    var comment = Mapper.Map<Comment>(item);
+                    this._unitOfWork.Comment.Add(comment);
+                    this._unitOfWork.SaveChanges();
+                    state = true; 
+                    return state;
                 }
-                else return false;
+                else return state;
             }
             else
             {
-                return false;
+                return state;
             }
         }
     }

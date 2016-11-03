@@ -13,8 +13,10 @@ namespace Task.MappingUI
         {
             Mapper.Initialize(x =>
             {
-                x.AddProfile<EntityToDomainMappingProfile>();
+                x.AddProfile<EntityToDtoMappingProfile>();
                 x.AddProfile<DomainToViewMappingProfile>();
+                x.AddProfile<ViewToDomainMappingProfile>();
+                x.AddProfile<DtoToEntityMappingProfile>();
             });
         }
     }

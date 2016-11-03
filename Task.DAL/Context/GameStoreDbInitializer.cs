@@ -14,12 +14,10 @@ namespace Task.DAL.Context
         {
             List<Comment> list = new List<Comment>
             {
-                new Comment {Body="First comment",Name="Yaroslav",Comments=new List<Comment> {new Comment { Body="First subcomment",Name="Yaroslav"} } },
-                new Comment {Body="Second comment",Name="Alexandr",Comments=new List<Comment> {new Comment { Body="Second comment",Name="Ivan"} } },
-                new Comment {Body="Third comment",Name="Yulia" }
+                new Comment {GameId = 1,Body="First comment",Name="Yaroslav",Comments=new List<Comment> {new Comment { Body="First subcomment",Name="Yaroslav"} } },
+                new Comment {GameId = 1,Body="Second comment",Name="Alexandr",Comments=new List<Comment> {new Comment { Body="Second comment",Name="Ivan"} } },
+                new Comment {GameId = 1,Body="Third comment",Name="Yulia" }
             };
-            db.Comments.AddRange(list);
-            db.SaveChanges();
 
             Genre first = new Genre { Name = "Action" };
             Genre second = new Genre { Name = "Adventure" };
@@ -49,6 +47,8 @@ namespace Task.DAL.Context
             db.Games.AddRange(GameList);
             PlatformTypeList[0].Games = GameList;
             PlatformTypeList[1].Games = GameList;
+            db.SaveChanges();
+            db.Comments.AddRange(list);
             db.SaveChanges();
         }
 

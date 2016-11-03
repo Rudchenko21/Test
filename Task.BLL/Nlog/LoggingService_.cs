@@ -15,11 +15,10 @@ namespace Task.BLL.Nlog
         public LoggingService_()
         {
             this.logger = LogManager.GetCurrentClassLogger();
-            //this.appDomain =  "Assembly : {Assembly.GetEntryAssembly().GetName().Version.ToString()}  AppDomain : {AppDomain.CurrentDomain.FriendlyName}";
         }
         public void Info(string message)
         {
-            logger.Info( $"{message}"); // todo you don't need wrap your message to string here, just logger.Info(message);
+            logger.Info( message);
         }
         public void Error(string message)
         {

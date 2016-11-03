@@ -12,27 +12,23 @@ namespace Task.DAL.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly GameStoreContext db; // todo rename please. It's not database, it's context
-        private Repository<Game> game; // todo please use proper name, it's _gameRepository, not game.
-        private Repository<Comment> comment;
-        private Repository<Genre> genre;
-        private Repository<PlatformType> platformtype;
+        private readonly GameStoreContext _gameStoreContext;
+        private Repository<Game> _gameRepository;
+        private Repository<Comment> _commentRepository;
+        private Repository<Genre> _genrereRepository;
+        private Repository<PlatformType> _platformTypeRepository;
 
-        public UnitOfWork(GameStoreContext db)
+        public UnitOfWork(GameStoreContext gameStoreContext)
         {
-            if (db != null) // todo please use operator ?? here
-            {
-                this.db = db;
-            }
-            else this.db = new GameStoreContext();
+            _gameStoreContext = gameStoreContext ?? new GameStoreContext();
         }
         public virtual IRepository<Game> Game
         {
             get
             {
-                if (game == null)
-                    game = new Repository<Game>(this.db);
-                return this.game;
+                if (_gameRepository == null)
+                    _gameRepository = new Repository<Game>(this._gameStoreContext);
+                return this._gameRepository;
             }
         }
 
@@ -40,32 +36,32 @@ namespace Task.DAL.UnitOfWork
         {
             get
             {
-                if (comment == null)
-                    comment = new Repository<Comment>(this.db);
-                return this.comment;
+                if (_commentRepository == null)
+                    _commentRepository = new Repository<Comment>(this._gameStoreContext);
+                return this._commentRepository;
             }
         }
         public IRepository<Genre> Genre
         {
             get
             {
-                if (genre == null)
-                    genre = new Repository<Genre>(this.db);
-                return this.genre;
+                if (_genrereRepository == null)
+                    _genrereRepository = new Repository<Genre>(this._gameStoreContext);
+                return this._genrereRepository;
             }
         }
         public IRepository<PlatformType> PlatformType
         {
             get
             {
-                if (platformtype == null)
-                    platformtype = new Repository<PlatformType>(this.db);
-                return this.platformtype;
+                if (_platformTypeRepository == null)
+                    _platformTypeRepository = new Repository<PlatformType>(this._gameStoreContext);
+                return this._platformTypeRepository;
             }
         }
         public void SaveChanges()
         {
-            this.db.SaveChanges();
+            this._gameStoreContext.SaveChanges();
         }
     }
 }

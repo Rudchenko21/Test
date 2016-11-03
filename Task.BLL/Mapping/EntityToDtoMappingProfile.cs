@@ -9,22 +9,21 @@ using Task.DAL.Entities;
 
 namespace Task.BLL.Mapping
 {
-    public class EntityToDomainMappingProfile : Profile // todo maybe EntityToDtoMappingProfile ?
+    public class EntityToDtoMappingProfile : Profile // 
     {
         public override string ProfileName
         {
-            get { return "EntityToDomainMappings"; }
+            get { return "EntityToDtoMappings"; }
         }
 
         protected override void Configure()
         {
-            Mapper.CreateMap<Genre, GenreDTO>().ReverseMap(); // todo such comment as at DomainToViewMappingProfile
-            Mapper.CreateMap<PlatformType, PlatformTypeDTO>().ReverseMap();
-            Mapper.CreateMap<Game, GameDTO>().ReverseMap();
+            Mapper.CreateMap<Genre, GenreDTO>();
+            Mapper.CreateMap<PlatformType, PlatformTypeDTO>();
+            Mapper.CreateMap<Game, GameDTO>();
             Mapper.CreateMap<Comment, CommentDTO>()
                 .ForMember(m=>m.GameKey,c=>c.MapFrom(s=>s.Game.Key))
                 .ForMember(m=>m.GameId,c=>c.MapFrom(s=>s.Game.Id));
-            Mapper.CreateMap<CommentDTO, Comment>();
         }
     }
 }

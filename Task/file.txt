@@ -1,1 +1,0 @@
-2016-10-28 11:43:01.8107|INFO|Task.Filters.LogIPFilter|Ip : ::1      DateOfAccess : 10/28/2016 11:43:01 AM    Controller : Game

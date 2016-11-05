@@ -1,0 +1,10 @@
+2016-11-01 15:12:22.6763 ERROR {message}
+2016-11-04 17:42:44.2820 ERROR Message : Value cannot be null.
+Parameter name: Try to get comments by gamekey with null or empty key  TargetSite : System.Collections.Generic.ICollection`1[Task.BLL.DTO.CommentDTO] GetAllByGame(System.String) StackTrace :    at Task.BLL.Services.CommentService.GetAllByGame(String key) in D:\GameStore\iaroslav_rudchenko\Task.BLL\Services\CommentService.cs:line 28
+   at Task.Controllers.CommentController.Comments(String gamekey) in D:\GameStore\iaroslav_rudchenko\Task\Controllers\CommentController.cs:line 34
+2016-11-04 17:58:30.9460 ERROR Message : Value cannot be null.
+Parameter name: Try to get comments by gamekey with null or empty key  TargetSite : System.Collections.Generic.ICollection`1[Task.BLL.DTO.CommentDTO] GetAllByGame(System.String) StackTrace :    at Task.BLL.Services.CommentService.GetAllByGame(String key) in D:\GameStore\iaroslav_rudchenko\Task.BLL\Services\CommentService.cs:line 28
+   at Task.Controllers.CommentController.Comments(String gamekey) in D:\GameStore\iaroslav_rudchenko\Task\Controllers\CommentController.cs:line 34
+2016-11-04 17:58:36.1957 ERROR Message : Value cannot be null.
+Parameter name: Try to get comments by gamekey with null or empty key  TargetSite : System.Collections.Generic.ICollection`1[Task.BLL.DTO.CommentDTO] GetAllByGame(System.String) StackTrace :    at Task.BLL.Services.CommentService.GetAllByGame(String key) in D:\GameStore\iaroslav_rudchenko\Task.BLL\Services\CommentService.cs:line 28
+   at Task.Controllers.CommentController.Comments(String gamekey) in D:\GameStore\iaroslav_rudchenko\Task\Controllers\CommentController.cs:line 34

@@ -1,0 +1,50 @@
+2016-10-29 23:06:55.5967 DEBUG {message}
+2016-10-30 01:26:51.6946 DEBUG {message}
+2016-10-30 16:33:15.2210 DEBUG {message}
+2016-11-01 12:30:33.4595 DEBUG {message}
+2016-11-01 12:31:46.4229 DEBUG {message}
+2016-11-01 12:31:55.7544 DEBUG {message}
+2016-11-01 12:32:19.4912 DEBUG {message}
+2016-11-01 12:32:38.0705 DEBUG {message}
+2016-11-01 12:33:26.8373 DEBUG {message}
+2016-11-01 12:33:34.9234 DEBUG {message}
+2016-11-01 12:36:47.3825 DEBUG {message}
+2016-11-01 12:36:48.8575 DEBUG {message}
+2016-11-01 12:37:00.9419 DEBUG {message}
+2016-11-01 12:55:16.4323 DEBUG {message}
+2016-11-01 12:55:57.0566 DEBUG {message}
+2016-11-01 12:57:26.7197 DEBUG {message}
+2016-11-01 14:53:03.2474 DEBUG {message}
+2016-11-01 14:53:28.7077 DEBUG {message}
+2016-11-01 15:07:43.3363 DEBUG {message}
+2016-11-01 15:07:59.3264 DEBUG {message}
+2016-11-01 15:08:11.5143 DEBUG {message}
+2016-11-01 15:08:28.3187 DEBUG {message}
+2016-11-01 15:11:43.3510 DEBUG {message}
+2016-11-01 15:12:22.6763 DEBUG {message}
+2016-11-01 15:12:36.8610 DEBUG {message}
+2016-11-01 15:12:40.8127 DEBUG {message}
+2016-11-02 10:19:55.3636 DEBUG {message}
+2016-11-02 10:20:05.1276 DEBUG {message}
+2016-11-02 10:20:56.9247 DEBUG {message}
+2016-11-02 10:48:56.4468 DEBUG {message}
+2016-11-02 10:49:08.6867 DEBUG {message}
+2016-11-02 10:53:51.7565 DEBUG {message}
+2016-11-02 11:40:05.7442 DEBUG {message}
+2016-11-02 11:40:17.2826 DEBUG {message}
+2016-11-02 11:41:44.7840 DEBUG {message}
+2016-11-02 12:17:37.9423 DEBUG {message}
+2016-11-02 12:17:53.1717 DEBUG {message}
+2016-11-02 15:05:18.9910 DEBUG {message}
+2016-11-03 12:22:36.9007 DEBUG Ip : ::1  Action : GetAllGames  Controller : Game
+2016-11-03 12:25:25.1609 DEBUG Ip : ::1  Action : GetAllGames  Controller : Game
+2016-11-03 12:33:36.9726 DEBUG Ip : ::1  Action : GetAllGames  Controller : Game
+2016-11-03 12:34:04.6238 DEBUG Ip : ::1  Action : GetAllGames  Controller : Game
+2016-11-03 12:34:32.9500 DEBUG Ip : ::1  Action : GetAllGames  Controller : Game
+2016-11-03 12:35:03.3844 DEBUG Ip : ::1  Action : GetAllGames  Controller : Game
+2016-11-03 12:38:02.6745 DEBUG Ip : ::1  Action : GetAllGames  Controller : Game
+2016-11-03 12:39:29.3535 DEBUG Ip : ::1  Action : GetAllGames  Controller : Game
+2016-11-03 13:07:46.4818 DEBUG Ip : ::1  Action : GetAllGames  Controller : Game
+2016-11-03 13:09:39.7490 DEBUG Ip : ::1  Action : GetGameByKey  Controller : Game
+2016-11-03 13:10:41.8528 DEBUG Ip : ::1  Action : GetAllGames  Controller : Game
+2016-11-03 13:11:25.2062 DEBUG Ip : ::1  Action : GetGameByKey  Controller : Game
